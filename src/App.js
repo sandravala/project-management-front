@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import Dashboard from "./components/dashboard/Dashboard";
+import {BrowserRouter} from "react-router-dom";
+import {QueryClient, QueryClientProvider} from "react-query";
+import {ReactQueryDevtools} from "react-query/devtools";
+import SVtheme from "./themes/SVtheme";
+import {ThemeProvider} from "@mui/material/styles";
+
+const queryClient = new QueryClient()
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <BrowserRouter>
+        <QueryClientProvider client={queryClient}>
+            <ThemeProvider theme={SVtheme}>
+                <Dashboard />
+            </ThemeProvider>
+          <ReactQueryDevtools initialIsOpen={false}/>
+        </QueryClientProvider>
+      </BrowserRouter>
   );
 }
 
