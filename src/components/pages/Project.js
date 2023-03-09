@@ -1,5 +1,12 @@
 import {useParams} from "react-router-dom";
-import {getProjectsN, useGetProject, useProjects, useViewProject, viewProject} from "../../api/projectsApi";
+import {
+    getProjectsN,
+    useGetProject,
+    useInvestmentList,
+    useProjects,
+    useViewProject,
+    viewProject
+} from "../../api/projectsApi";
 
 
 
@@ -12,8 +19,9 @@ const Project = () => {
         return <span>Loading...</span>
     }
 
+
     if(isError) {
-        return <span>Error: {error.message}</span>
+        return <span>Error: {error.message }</span>
     }
 
     if(isSuccess) {
@@ -30,30 +38,23 @@ const Project = () => {
             eligibleCosts: data.eligibleCosts,
             fundingRate: data.fundingRate,
             grantAmount: data.grantAmount,
-            indirectCostRate: data.indirectCostRate
-        }
-        // const projectN = projects.map((item) => {
-        //     return {
-        //         id: item.id,
-        //         projectNo: item.projectNo,
-        //         name: item.name,
-        //         client: item.client,
-        //         coordinator: item.coordinator,
-        //         projectAlias: item.projectAlias,
-        //         startDate: item.startDate,
-        //         endDate: item.endDate,
-        //         contractSigningDate: item.contractSigningDate,
-        //         eligibleCosts: item.eligibleCosts,
-        //         fundingRate: item.fundingRate,
-        //         grantAmount: item.grantAmount,
-        //         indirectCostRate: item.indirectCostRate,
-        //     };
-        // })
+            indirectCostRate: data.indirectCostRate,
+          }
+
+        console.log(data.investmentDtos)
+
+        const investmentList = data.investmentDtos;
+
 
         return (
             <h1>
 
                 {pr.projectAlias}
+                {
+                    investmentList.map((inv, i) =>(
+                        <p key={i}>{inv.name}</p>
+                    ))
+                }
                 {/*projektas {id} = {project.projectAlias}*/}
 
             </h1>

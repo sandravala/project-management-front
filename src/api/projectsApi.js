@@ -1,5 +1,5 @@
 import HTTP from "./";
-import {useMutation, useQuery} from "react-query";
+import { useQuery} from "react-query";
 import axios from "axios";
 
 const getProjects = () =>
@@ -14,25 +14,41 @@ const useProjects = () => {
     return {...context, projects: context.data}
 }
 
-
-async function GetProject(id) {
+async function getProject(id) {
     try {
         const response = await HTTP.get(`/projects/${id}`);
-        console.log(response.data)
         return response.data
     } catch (error) {
         console.error(error);
     }
-
 }
 
 const useViewProject = (id) => {
-    const context = useQuery('viewProject', () => GetProject(id))
+    const context = useQuery('viewProject', () => getProject(id))
     console.log(context)
     return {...context, project: context.data}
 }
 
 
+// async function getInvestmentList(id) {
+//     try {
+//         const response = await HTTP.get(`/projects/${id}`);
+//         console.log(response.data)
+//         return response.data
+//     } catch (error) {
+//         console.error(error);
+//     }
+//
+// }
+//
+// const useInvestmentList = (id) => {
+//     const context = useQuery('viewInvestmentList', () => getInvestmentList(id))
+//     console.log(context)
+//     return {...context, invLoading: context.isLoading, invIsEr: context.isError, invSuccess: context.isSuccess, invEr: context.error, investmentList: context.data}
+// }
+
+
+export { useProjects, useViewProject }
 
 
 // const createProduct = (product) => HTTP.post("/products/create", product)
@@ -41,5 +57,3 @@ const useViewProject = (id) => {
 //     const mutation = useMutation(createProduct, config);
 //     return mutation.mutateAsync
 //}
-
-export { useProjects, useViewProject }
