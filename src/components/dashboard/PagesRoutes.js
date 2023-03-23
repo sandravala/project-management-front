@@ -12,7 +12,7 @@ const PagesRoutes = () => (
         <Route path="/about" element={<About />}/>
         <Route path="/projects" element={<Projects />}/>
         <Route path="/projects/:id" element={<Project />}/>
-        <Route path="/projects/:id/iList" element={<InvestmentList />}/>
+        <Route path="/projects/:id/iList" element={<Project />}/>
         <Route path="/projects/save" element={<NewProject />}/>
 
 
