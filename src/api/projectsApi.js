@@ -1,13 +1,11 @@
 import HTTP from "./";
-import { useQuery} from "react-query";
+import {useMutation, useQuery} from "react-query";
 import axios from "axios";
 
 const getProjects = () =>
     HTTP.get("/projects/all")
-        .then(response =>
-            new Promise((resolve) => {
-                setTimeout(() => resolve(response.data), 1000)
-            }))
+        .then(response => response.data)
+        .catch((error) => console.log(error.message));
 
 const useProjects = () => {
     const context = useQuery('getProjects', getProjects, { refetchOnWindowFocus: false})
@@ -30,30 +28,31 @@ const useViewProject = (id) => {
 }
 
 
-// async function getInvestmentList(id) {
-//     try {
-//         const response = await HTTP.get(`/projects/${id}`);
-//         console.log(response.data)
-//         return response.data
-//     } catch (error) {
-//         console.error(error);
-//     }
-//
-// }
-//
-// const useInvestmentList = (id) => {
-//     const context = useQuery('viewInvestmentList', () => getInvestmentList(id))
-//     console.log(context)
-//     return {...context, invLoading: context.isLoading, invIsEr: context.isError, invSuccess: context.isSuccess, invEr: context.error, investmentList: context.data}
-// }
+async function getInvestmentList(id) {
+    try {
+        const response = await HTTP.get(`/projects/${id}/iList`);
+        console.log(response.data)
+        return response.data
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+
+const useInvestmentList = (id) => {
+    const context = useQuery('viewInvestmentList', () => getInvestmentList(id))
+    console.log(context)
+    return {...context}
+}
+
+const saveProject = (project) => HTTP.post("/projects/save", project)
+
+const useSaveProject = (config) => {
+    const mutation = useMutation(saveProject, config);
+    return mutation.mutateAsync
+}
 
 
-export { useProjects, useViewProject }
+export { useProjects, useViewProject, useInvestmentList, useSaveProject }
 
 
-// const createProduct = (product) => HTTP.post("/products/create", product)
-
-// const useCreateProduct = (config) => {
-//     const mutation = useMutation(createProduct, config);
-//     return mutation.mutateAsync
-//}

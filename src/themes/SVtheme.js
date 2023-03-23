@@ -8,7 +8,7 @@ const SVtheme = createTheme({
         },
         secondary: {
             light: red[700],
-            main:"#8f1b1b"
+            main: "#8f1b1b"
         }
     }
 });

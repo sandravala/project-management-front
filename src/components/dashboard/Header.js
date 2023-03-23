@@ -53,7 +53,7 @@ const Header = ({drawerWidth, open, toggleDrawer}) => {
                     noWrap
                     sx={{ flexGrow: 1 }}
                 >
-                    E-Shop
+                    Projektų valdymo sistema
                 </Typography>
                 <IconButton color="inherit">
                     <Badge badgeContent={1344} color="secondary">
