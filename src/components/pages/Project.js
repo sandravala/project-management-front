@@ -146,7 +146,7 @@ const Project = () => {
                                     </Grid>
                                 </TabPanel>
                                 <TabPanel value={tabValue} index={1}>
-                                    Item Two
+                                    <InvestmentList/>
                                 </TabPanel>
                                 <TabPanel value={tabValue} index={2}>
                                     Item Three
