@@ -14,14 +14,14 @@ import PagesRoutes from "./PagesRoutes";
 
 export default function Dashboard() {
 
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
 
     const toggle = () => {
         setOpen(!open);
     };
 
     const propPack = {
-        drawerWidth: 240,
+        drawerWidth: 200,
         open: open,
         toggleDrawer: toggle
     };
@@ -47,8 +47,8 @@ export default function Dashboard() {
                 }}
             >
                 <Toolbar/>
-                <Container maxWidth="lg" sx={{mt: 4, mb: 4}}>
-                    <Grid container spacing={3}>
+                <Container maxWidth={false} sx={{mt: 4, mb: 4, maxWidth:'100%'}}>
+                    <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <Paper sx={{p: 2, display: 'flex', flexDirection: 'column', height: "auto"}}>
                                 <PagesRoutes/>

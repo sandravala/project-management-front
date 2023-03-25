@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import {Stack} from "@mui/material";
+import Typography from "@mui/material/Typography";
 
 export const Countdown = ({endOfProject}) => {
     const [currentTime, setCurrentTime] = useState(Date.now());
@@ -40,14 +42,14 @@ export const Countdown = ({endOfProject}) => {
     }, []);
 
     return (
-        <>
-            <p>Deadline comes in</p>
-            <p className="counter">
-                <span>{yearDiff}Y </span>
-                <span>{monthDiff}M </span>
-                <span>{dayDiff}D </span>
-
-            </p>
-        </>
+            <Stack direction="row" spacing={2} sx={{ alignItems: "end" }}>
+                <Typography component={'span'} variant="normal">IKI PABAIGOS LIKO:</Typography>
+                <Typography component={'span'} variant="countdown">{yearDiff}</Typography>
+                <Typography component={'span'} variant="normal">M</Typography>
+                <Typography component={'span'} variant="countdown">{monthDiff} </Typography>
+                <Typography component={'span'} variant="normal">MĖN</Typography>
+                <Typography component={'span'} variant="countdown">{dayDiff} </Typography>
+                <Typography component={'span'} variant="normal">D</Typography>
+            </Stack>
     );
 };

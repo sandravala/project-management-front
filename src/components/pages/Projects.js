@@ -40,7 +40,7 @@ const Projects = () => {
 
     const loadingElement = isLoading && (
         <div style={{display: "flex", height: "80vh", width: "100%", alignItems: "center", justifyContent: "center"}}>
-            <CircularProgress /><p>Projects loading...</p>
+            <CircularProgress /><span>Projects loading...</span>
         </div>
     )
 

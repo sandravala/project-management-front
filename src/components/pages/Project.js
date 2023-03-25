@@ -15,22 +15,28 @@ import Tab from '@mui/material/Tab';
 import {useEffect, useState} from "react";
 import Typography from "@mui/material/Typography";
 import { Link } from 'react-router-dom';
-import InvestmentList from "./InvestmentList";
+import InvestmentList from "./ProjectDashboard/InvestmentList";
+import {GeneralProjectInfo} from "./ProjectDashboard/GeneralProjectInfo";
+import KeyboardBackspaceSharpIcon from '@mui/icons-material/KeyboardBackspaceSharp';
+import IconButton from "@mui/material/IconButton";
+import {Stack} from "@mui/material";
+import Divider from "@mui/material/Divider";
 
-
-const Project = () => {
+const Project = ({selectedTab}) => {
 
     const saveProject = useSaveProject();
     const navigate = useNavigate();
     const {id} = useParams();
     const { isLoading, isError, isSuccess, data, error } = useViewProject(id);
-    const [tabValue, setTabValue] = useState(0);
+    const [tabValue, setTabValue] = useState(selectedTab);
 
-    const tabPath = ['', 'iList', ''];
 
-    useEffect(() => {
-        setTabValue(+tabPath[window.location.pathname.substring(1)] || 0);
-    }, []);
+
+    // useEffect(() => {
+    //     setTabValue(+tabPath[window.location.pathname.substring(1)] || 0);
+    // }, []);
+
+    const tabPath = ['', 'iList'];
 
     const handleChange = (event, newValue) => {
         window.history.replaceState({}, "", "/projects/" + id + "/" + tabPath[newValue]);
@@ -46,6 +52,7 @@ const Project = () => {
     }
 
     if(isSuccess) {
+
         const pr = {
             id: data.id,
             projectNo: data.projectNo,
@@ -60,8 +67,8 @@ const Project = () => {
             fundingRate: data.fundingRate,
             grantAmount: data.grantAmount,
             indirectCostRate: data.indirectCostRate,
+            investmentList: data.investmentDtos
           }
-        const investmentList = data.investmentDtos;
 
         const Item = styled(Paper)(({ theme }) => ({
             backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -71,7 +78,9 @@ const Project = () => {
             color: theme.palette.text.secondary,
         }));
 
+
         function TabPanel(props) {
+
             const { children, value, index, ...other } = props;
 
             return (
@@ -84,7 +93,7 @@ const Project = () => {
                 >
                     {value === index && (
                         <Box sx={{ p: 3 }}>
-                            <Typography>{children}</Typography>
+                            <Typography component={'span'}>{children}</Typography>
                         </Box>
                     )}
                 </div>
@@ -100,20 +109,53 @@ const Project = () => {
         function a11yProps(index) {
             return {
                 id: `simple-tab-${index}`,
-                'aria-controls': `simple-tabpanel-${index}`,
+                'aria-controls': `simple-tabpanel-${index}`
             };
         }
 
 
         return (
-            <>
+
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <Item>
-                                <h1>{pr.projectAlias}</h1>
-                            </Item>
-                        </Grid>
+                            <Stack direction="row" spacing={2}>
+                                <Grid item xs={4}>
+                                    <IconButton aria-label="back"
+                                                sx={{
+                                                    padding: 0,
+                                                    color: "#0c2248",
+                                                    "& :hover": {
+                                                        color: "#fd2929",
+                                                        boxShadow: "rgb(126,134,157)",
+                                                    }
+                                                }}
+                                                onClick={() => navigate("/projects")}
+                                    >
+                                        <KeyboardBackspaceSharpIcon />
+                                    </IconButton>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <Box sx={{ display: 'flex', justifyContent: 'center'}}>
+                                        <Typography component={'span'} variant="upperCaseBold">{pr.projectAlias}</Typography>
+                                    </Box>
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <Box sx={{ display: 'flex', justifyContent: 'right'}}>
+                                    <Countdown endOfProject={pr.endDate}/>
+                                    </Box>
+                                </Grid>
+                            </Stack>
+                            <Grid item xs={12}>
+                                <Divider sx={{
+                                    width: '100%',
+                                    maxWidth: '100%',
+                                    bgcolor: 'background.paper',
+                                    paddingTop: 2
+                                }}
+                                />
+                            </Grid>
+                         </Grid>
                         <Grid item xs={12}>
                             <Box sx={{ width: '100%' }}>
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -123,64 +165,18 @@ const Project = () => {
                                         centered>
                                         <Tab label="BENDRA INFORMACIJA" {...a11yProps(0)} />
                                         <Tab label="PIRKIMAI" {...a11yProps(1)} />
-                                        <Tab label="TERMINAI" {...a11yProps(2)} />
                                     </Tabs>
                                 </Box>
                                 <TabPanel value={tabValue} index={0}>
-                                    <Grid container spacing={2}>
-                                        <Grid item xs={4}>
-                                            <Item>
-                                                <DoughnutChart dataLabel="%" chartData={[30, 70]} colorLabels={["Isisavinta", "likutis"]}/>
-                                            </Item>
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                            <Item>
-                                                <DoughnutChart dataLabel="%" chartData={[30, 70]} colorLabels={["Isisavinta", "likutis"]}/>
-                                            </Item>
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                            <Item>
-                                                <DoughnutChart dataLabel="%" chartData={[30, 70]} colorLabels={["Isisavinta", "likutis"]}/>
-                                            </Item>
-                                        </Grid>
-                                    </Grid>
+                                    <GeneralProjectInfo Item={Item} Pr={pr}/>
                                 </TabPanel>
                                 <TabPanel value={tabValue} index={1}>
                                     <InvestmentList/>
                                 </TabPanel>
-                                <TabPanel value={tabValue} index={2}>
-                                    Item Three
-                                </TabPanel>
                             </Box>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Item>
-
-                            </Item>
-                        </Grid>
-                        <Grid item xs={8}>
-                            <Item>xs=8</Item>
                         </Grid>
                     </Grid>
                 </Box>
-            <h1>
-
-                 , {pr.endDate}
-                {
-                    investmentList.map((inv, i) =>(
-                        <p key={i}>{inv.name + " "}{inv.procurementDeadline} </p>
-                    ))
-                }
-                {/*projektas {id} = {project.projectAlias}*/}
-
-
-            </h1>
-            <Countdown endOfProject={pr.endDate}/>
-
-            </>
-
-            //darysiu su mui tabs. gal virsuj atskiras paperis ar kitas elementas, kuris savyje laiko projekto pavadinima ir kitus butinus elementus, pvz datas, numeri, kontaktus ir pan.
-            // o sone - tabai: investicijos, pirkimai, MP ir pan. gal investiciju net nebus tabo, tiesiog pagrindinis puslapis projekto su inv sarasu
         )
     }
     }

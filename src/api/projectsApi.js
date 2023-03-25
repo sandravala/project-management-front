@@ -23,7 +23,6 @@ async function getProject(id) {
 
 const useViewProject = (id) => {
     const context = useQuery('viewProject', () => getProject(id))
-    console.log(context)
     return {...context, project: context.data}
 }
 
@@ -31,7 +30,6 @@ const useViewProject = (id) => {
 async function getInvestmentList(id) {
     try {
         const response = await HTTP.get(`/projects/${id}/iList`);
-        console.log(response.data)
         return response.data
     } catch (error) {
         console.error(error);
@@ -41,7 +39,6 @@ async function getInvestmentList(id) {
 
 const useInvestmentList = (id) => {
     const context = useQuery('viewInvestmentList', () => getInvestmentList(id))
-    console.log(context)
     return {...context}
 }
 
