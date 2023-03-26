@@ -21,6 +21,7 @@ import KeyboardBackspaceSharpIcon from '@mui/icons-material/KeyboardBackspaceSha
 import IconButton from "@mui/material/IconButton";
 import {Stack} from "@mui/material";
 import Divider from "@mui/material/Divider";
+import {useTranslation} from "react-i18next";
 
 const Project = ({selectedTab}) => {
 
@@ -29,7 +30,7 @@ const Project = ({selectedTab}) => {
     const {id} = useParams();
     const { isLoading, isError, isSuccess, data, error } = useViewProject(id);
     const [tabValue, setTabValue] = useState(selectedTab);
-
+    const {t} = useTranslation();
 
 
     // useEffect(() => {
@@ -44,7 +45,7 @@ const Project = ({selectedTab}) => {
     };
 
     if(isLoading) {
-        return <span>Loading...</span>
+        return <span>{t("projectLoading")}</span>
     }
 
     if(isError) {
@@ -163,8 +164,8 @@ const Project = ({selectedTab}) => {
                                         value={tabValue}
                                         onChange={handleChange}
                                         centered>
-                                        <Tab label="BENDRA INFORMACIJA" {...a11yProps(0)} />
-                                        <Tab label="PIRKIMAI" {...a11yProps(1)} />
+                                        <Tab label={t("projectGeneralInfo")} {...a11yProps(0)} />
+                                        <Tab label={t("projectProcurement")} {...a11yProps(1)} />
                                     </Tabs>
                                 </Box>
                                 <TabPanel value={tabValue} index={0}>

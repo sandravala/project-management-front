@@ -5,8 +5,11 @@ import Divider from "@mui/material/Divider";
 import {Countdown} from "./CountDownTimer";
 import {Stack} from "@mui/material";
 import Box from "@mui/material/Box";
+import {useTranslation} from "react-i18next";
 
 export const GeneralProjectInfo = ({Item, Pr}) => {
+
+    const {t} = useTranslation();
 
     const twoTypographyElements = (text1, text2) => {
         return (
@@ -67,19 +70,19 @@ export const GeneralProjectInfo = ({Item, Pr}) => {
             </Grid>
             <Grid item xs={4}></Grid>
             <Grid item xs={2}>
-                {twoTypographyElements("PROJEKTO NR:", "PAVADINIMAS:")}
+                {twoTypographyElements(t("projectNo"), t("projectName"))}
             </Grid>
             <Grid item xs={5.5}>
                 {twoTypographyElements(Pr.projectNo, Pr.name)}
             </Grid>
             <Grid item xs={1.5}>
-                {twoTypographyElements("SUTARTIS:", Pr.contractSigningDate)}
+                {twoTypographyElements(t("projectContract"), Pr.contractSigningDate)}
             </Grid>
             <Grid item xs={1.5}>
-                {twoTypographyElements("PRADŽIA:", Pr.startDate)}
+                {twoTypographyElements(t("projectStart"), Pr.startDate)}
             </Grid>
             <Grid item xs={1.5}>
-                {twoTypographyElements("PABAIGA:", Pr.endDate)}
+                {twoTypographyElements(t("projectEnd"), Pr.endDate)}
             </Grid>
             <Grid item xs={12}>
                 <MyDivider/>
@@ -87,21 +90,21 @@ export const GeneralProjectInfo = ({Item, Pr}) => {
 
             <Grid item xs={4}>
                 <Item>
-                    <Typography component={'span'} variant="normal">PIRKIMO BUDAI</Typography>
+                    <Typography component={'span'} variant="normal">{t("projectPrTypes")}</Typography>
                     <MyDivider/>
                     <DoughnutChart dataLabel="vnt." chartData={[procurementCompetitionCounter(), iListLength - procurementCompetitionCounter()]} colorLabels={["Konkursas", "Kita"]}/>
                 </Item>
             </Grid>
             <Grid item xs={4}>
                 <Item>
-                    <Typography component={'span'} variant="normal">PIRKIMU IVYKDYTA</Typography>
+                    <Typography component={'span'} variant="normal">{t("projectPrDone")}</Typography>
                     <MyDivider/>
                     <DoughnutChart dataLabel="vnt." chartData={[procurementStateCounter(), iListLength - procurementStateCounter()]} colorLabels={["Ivykdyti", "Neivykdyti"]}/>
                 </Item>
             </Grid>
             <Grid item xs={4}>
                 <Item>
-                    <Typography component={'span'} variant="normal">PROJEKTO TRUKME</Typography>
+                    <Typography component={'span'} variant="normal">{t("projectTimeLeft")}</Typography>
                     <MyDivider/>
                     <DoughnutChart dataLabel="%" chartData={[timeElapsed, timeLeft]} colorLabels={["Praejo laiko", "Liko laiko"]}/>
                 </Item>

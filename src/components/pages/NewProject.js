@@ -113,33 +113,14 @@ const NewProject = () => {
                     setSavedProjectAlias(projectToSave.projectAlias);
                     setSubmitting(false)
                     setAlertOpen(true)
-                    //     console.log(values);
-
                 }}
-
-
-                //      onSubmit={async (product, {setSubmitting}) => {
-                //                             await createProduct(product)
-                //                             setSubmitting(false)
-                //                             onClose()
-                //                             fetchProducts()
-                //                             setAlertOpen(true)
-                //                         }}
 
                 validationSchema={validationSchema}
             >
                 {(props) => {
                     return (
                         <Form id="projectForm">
-                            {/*<Field label="Project number"*/}
-                            {/*       name="projectNo"*/}
-                            {/*       variant="standard"*/}
-                            {/*       fullWidth*/}
-                            {/*       margin="normal"*/}
-                            {/*       // error={!!props.errors.name && props.touched.name}*/}
-                            {/*       // helperText={props.touched.name && props.errors.name}*/}
-                            {/*       as={TextField}*/}
-                            {/*/>*/}
+
                             <FieldFormik name="projectNo" propsF={props}/>
                             <FieldFormik name="name" propsF={props}/>
                             <FieldFormik name="client" propsF={props}/>

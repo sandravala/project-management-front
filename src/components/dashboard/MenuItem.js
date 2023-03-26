@@ -37,7 +37,10 @@ const MenuItem = ({label, icon, link}) => {
                 <ListItemIcon>
                     {icon}
                 </ListItemIcon>
-                <ListItemText primary={label} />
+                <ListItemText
+                    primary={label}
+                    primaryTypographyProps={{ style: { whiteSpace: "normal" } }}
+                />
             </ListItemButton>
         </StyledTooltip>
     )

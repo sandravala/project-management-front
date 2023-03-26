@@ -4,13 +4,19 @@ import {Home} from "@mui/icons-material";
 import CategoryIcon from '@mui/icons-material/Category';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
 import AddBoxIcon from '@mui/icons-material/AddBox';
+import {useTranslation} from "react-i18next";
 
-export const MenuItemList = (
 
+export const MenuItemList = () => {
+
+    const {t} = useTranslation();
+
+    return (
     <>
-        <MenuItem label="Home" link="/" icon={<Home/>} />
-        <MenuItem label="My Projects" link="/projects/my" icon={<StarRoundedIcon/>} />
-        <MenuItem label="Projects" link="/projects" icon={<CategoryIcon/>} />
-        <MenuItem label="Kurti projekta" link="/projects/save" icon={<AddBoxIcon/>} />
+        <MenuItem label={t('menuHome')} link="/" icon={<Home/>} />
+        <MenuItem label={t('menuMyProjects')} link="/projects/my" icon={<StarRoundedIcon/>} />
+        <MenuItem label={t('menuProjects')} link="/projects" icon={<CategoryIcon/>} />
+        <MenuItem label={t('menuCreateProject')} link="/projects/save" icon={<AddBoxIcon/>} />
     </>
-);
+    );
+};

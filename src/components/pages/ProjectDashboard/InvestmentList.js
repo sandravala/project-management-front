@@ -19,12 +19,11 @@ import {useState} from "react";
 import EditSharpIcon from '@mui/icons-material/EditSharp';
 import DoneOutlineSharpIcon from '@mui/icons-material/DoneOutlineSharp';
 import { DateField } from '@mui/x-date-pickers/DateField';
+import {useTranslation} from "react-i18next";
 
 
 
 const InvestmentList = () => {
-
-
 
     const {id} = useParams()
     const { isLoading, isError, isSuccess, data, error } = useInvestmentList(id)
@@ -43,9 +42,9 @@ const InvestmentList = () => {
         procurementState: "",
         projectId: parseInt(id)
     });
+    const {t} = useTranslation();
 
     const [rowIndex, setRowIndex] = useState(-1);
-
 
 
     const loadingElement = isLoading && (
@@ -116,14 +115,14 @@ const InvestmentList = () => {
 
 
         const columns = [
-            { id: 0, field: "name", label: "Pavadinimas", flex: 0.5, align: "left" },
-            { id: 1, field: "procurementType", label: "Pirkimo būdas", flex: 1, align: "left" },
-            { id: 2, field: "plannedCostAmount", label: "TFI", flex: 0.3, align: "left" },
-            { id: 3, field: "actualContractCosts", label: "Faktinė suma", flex: 0.3, align: "left" },
+            { id: 0, field: "name", label: t("invName"), flex: 0.5, align: "left" },
+            { id: 1, field: "procurementType", label: t("invPrType"), flex: 1, align: "left" },
+            { id: 2, field: "plannedCostAmount", label: t("invEligibleCosts"), flex: 0.3, align: "left" },
+            { id: 3, field: "actualContractCosts", label: t("invActualCosts"), flex: 0.3, align: "left" },
             // { id: 4, field: "fundingRate", label: "Finansavimo %", flex: 0.3, align: "left" },
-            { id: 5, field: "fundingAmount", label: "Skirtas finansavimas", flex: 0.3, align: "left" },
-            { id: 6, field: "procurementDeadline", label: "Terminas", flex: 0.3, align: "left" },
-            { id: 7, field: "procurementState", label: "Būsena", flex: 1, align: "left" },
+            { id: 5, field: "fundingAmount", label: t("invFundingAmount"), flex: 0.3, align: "left" },
+            { id: 6, field: "procurementDeadline", label: t("invDeadline"), flex: 0.3, align: "left" },
+            { id: 7, field: "procurementState", label: t("invState"), flex: 1, align: "left" },
         ];
 
         return (
@@ -154,7 +153,7 @@ const InvestmentList = () => {
                                     align="center"
                                     style={{flex: 0.5}}
                                 >
-                                    Redaguoti
+                                    {t("invEdit")}
                                 </TableCell>
                             </TableRow>
                         </TableHead>

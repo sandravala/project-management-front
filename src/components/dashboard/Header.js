@@ -5,20 +5,25 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Link as RouterLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import VpnKeyIcon from '@mui/icons-material/VpnKey';
 import Button from "@mui/material/Button";
 import {userLoggedOut} from "../../store/slices/UserSlice";
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import Tooltip from "@mui/material/Tooltip";
-import {tooltipClasses} from "@mui/material";
+import {TextField, tooltipClasses} from "@mui/material";
+import {i18n} from "../../index"
+import {Translation, useTranslation} from "react-i18next";
+import MenuItem from '@mui/material/MenuItem';
+import Link from "@mui/material/Link";
 
 const Header = ({drawerWidth, open, toggleDrawer}) => {
 
     const navigate = useNavigate()
     const user = useSelector(({user}) => user?.userDto);
     const dispatch = useDispatch()
+    const {t} = useTranslation();
 
 
     const AppBar = styled(MuiAppBar, {
@@ -139,9 +144,12 @@ const Header = ({drawerWidth, open, toggleDrawer}) => {
                     noWrap
                     sx={{ flexGrow: 1 }}
                 >
-                    Projektų valdymo appsas
+                    <Link underline="none" color="inherit" component={RouterLink} to="/">
+                        {t('siteTitle')}
+                    </Link>
                 </Typography>
                 {loginButton || logoutButton}
+
             </Toolbar>
         </AppBar>
     )

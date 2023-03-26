@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import {Stack} from "@mui/material";
 import Typography from "@mui/material/Typography";
+import {useTranslation} from "react-i18next";
 
 export const Countdown = ({endOfProject}) => {
+
+    const {t} = useTranslation();
     const [currentTime, setCurrentTime] = useState(Date.now());
     const targetTime = new Date(endOfProject);
     const today = new Date(currentTime);
@@ -43,13 +46,13 @@ export const Countdown = ({endOfProject}) => {
 
     return (
             <Stack direction="row" spacing={2} sx={{ alignItems: "end" }}>
-                <Typography component={'span'} variant="normal">IKI PABAIGOS LIKO:</Typography>
+                <Typography component={'span'} variant="normal">{t('timerText')}</Typography>
                 <Typography component={'span'} variant="countdown">{yearDiff}</Typography>
-                <Typography component={'span'} variant="normal">M</Typography>
+                <Typography component={'span'} variant="normal">{t('timerYear')}</Typography>
                 <Typography component={'span'} variant="countdown">{monthDiff} </Typography>
-                <Typography component={'span'} variant="normal">MĖN</Typography>
+                <Typography component={'span'} variant="normal">{t('timerMonth')}</Typography>
                 <Typography component={'span'} variant="countdown">{dayDiff} </Typography>
-                <Typography component={'span'} variant="normal">D</Typography>
+                <Typography component={'span'} variant="normal">{t('timerDay')}</Typography>
             </Stack>
     );
 };

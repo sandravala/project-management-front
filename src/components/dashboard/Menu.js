@@ -52,7 +52,7 @@ const Menu = ({drawerWidth, open, toggleDrawer}) => {
                 </Toolbar>
                 <Divider />
                 <List component="nav">
-                    {MenuItemList}
+                    <MenuItemList/>
                 </List>
             </Drawer>
         </>
