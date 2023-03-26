@@ -53,13 +53,8 @@ const Header = ({drawerWidth, open, toggleDrawer}) => {
                     noWrap
                     sx={{ flexGrow: 1 }}
                 >
-                    Projektų valdymo sistema
+                    Projektų valdymo appsas
                 </Typography>
-                <IconButton color="inherit">
-                    <Badge badgeContent={1344} color="secondary">
-                        <NotificationsIcon />
-                    </Badge>
-                </IconButton>
             </Toolbar>
         </AppBar>
     )

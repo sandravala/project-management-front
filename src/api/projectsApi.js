@@ -1,5 +1,5 @@
 import HTTP from "./";
-import {useMutation, useQuery} from "react-query";
+import {useMutation, useQuery, useQueryClient} from "react-query";
 import axios from "axios";
 
 const getProjects = () =>
@@ -49,7 +49,16 @@ const useSaveProject = (config) => {
     return mutation.mutateAsync
 }
 
+const deleteProject = (id) => HTTP.delete(`/projects/?id=${id}`)
 
-export { useProjects, useViewProject, useInvestmentList, useSaveProject }
+const useDeleteProject = () => {
+
+    const queryClient = useQueryClient();
+    const mutation = useMutation(deleteProject, {onSettled: () => void queryClient.invalidateQueries({ queryKey: ['getProjects'] })});
+    return mutation.mutateAsync
+}
+
+
+export { useProjects, useViewProject, useInvestmentList, useSaveProject, useDeleteProject }
 
 

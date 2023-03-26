@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import Button from "@mui/material/Button";
 import {useNavigate} from "react-router-dom";
 import {
     CircularProgress,
@@ -12,21 +10,22 @@ import {
     TablePagination,
     TableRow
 } from "@mui/material";
-import {useProjects} from "../../api/projectsApi";
+import {useDeleteProject, useProjects} from "../../api/projectsApi";
 import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import {ThemeProvider} from "@mui/material/styles";
-import SVtheme from "../../themes/SVtheme";
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import {useState} from "react";
 
 
 const Projects = () => {
 
     const navigate = useNavigate()
-    const { isLoading, projects} = useProjects()
+    const { isLoading, projects } = useProjects()
+    const deleteProject = useDeleteProject();
 
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -36,7 +35,6 @@ const Projects = () => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
-
 
     const loadingElement = isLoading && (
         <div style={{display: "flex", height: "80vh", width: "100%", alignItems: "center", justifyContent: "center"}}>
@@ -70,13 +68,6 @@ const Projects = () => {
         { id: 1, field: "name", label: "Projekto pavadinimas", flex: 1, align: "left" },
         { id: 2, field: "client", label: "Klientas", flex: 0.4, align: "left" },
         { id: 3, field: "coordinator", label: "Koordinuoja", flex: 0.5, align: "left" },
-        // {
-        //     id: 4,
-        //     field: "openProject",
-        //     flex: 0.5,
-        //     label: "Peržiūrėti projekta",
-        //     renderCell: ({row}) => <Button variant="text" onClick={() => navigate(row.prLink)}>Rodyti</Button>
-        // }
     ];
 
 
@@ -111,6 +102,13 @@ const Projects = () => {
                             >
                                 Peržiūrėti projekta
                             </TableCell>
+                            <TableCell
+                                key={5}
+                                align="center"
+                                style={{flex: 0.5}}
+                            >
+                                Istrinti projekta
+                            </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -138,6 +136,19 @@ const Projects = () => {
                                                 }}
                                                 onClick={() => navigate(row.prLink)}>
                                                 <VisibilityOutlinedIcon/>
+                                            </IconButton>
+                                        </TableCell>
+                                        <TableCell key={5} align="center" >
+                                            <IconButton
+                                                sx={{
+                                                    color: "#0c2248",
+                                                    "& :hover": {
+                                                        color: "#fd2929",
+                                                        boxShadow: "rgb(126,134,157)",
+                                                    }
+                                                }}
+                                                onClick={() => deleteProject(row.id)}>
+                                                <DeleteOutlineOutlinedIcon/>
                                             </IconButton>
                                         </TableCell>
                                     </TableRow>
