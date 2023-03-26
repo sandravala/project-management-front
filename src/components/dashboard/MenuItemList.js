@@ -1,10 +1,9 @@
 import * as React from 'react';
 import MenuItem from "./MenuItem";
-import {Home, Info} from "@mui/icons-material";
-import LockOpenIcon from '@mui/icons-material/LockOpen';
-import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
+import {Home} from "@mui/icons-material";
 import CategoryIcon from '@mui/icons-material/Category';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 export const MenuItemList = (
 
@@ -12,7 +11,6 @@ export const MenuItemList = (
         <MenuItem label="Home" link="/" icon={<Home/>} />
         <MenuItem label="My Projects" link="/projects/my" icon={<StarRoundedIcon/>} />
         <MenuItem label="Projects" link="/projects" icon={<CategoryIcon/>} />
-        <MenuItem label="Sign up" link="/signup" icon={<LockOpenIcon/>} />
-        <MenuItem label="Kurti projekta" link="/projects/save" icon={<AddBoxOutlinedIcon/>} />
+        <MenuItem label="Kurti projekta" link="/projects/save" icon={<AddBoxIcon/>} />
     </>
 );

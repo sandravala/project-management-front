@@ -7,8 +7,10 @@ const SVtheme = createTheme({
             main: "#0c2248"
         },
         secondary: {
-            light: red[700],
             main: "#8f1b1b"
+        },
+        lighterPrimary: {
+            main: "#143367"
         }
     },
     typography: {
