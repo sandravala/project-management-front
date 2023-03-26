@@ -7,6 +7,7 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         userLoggedIn(user, {payload: loggedInUser}) {
+            console.log(loggedInUser)
             return loggedInUser // cia pakeiciam state
         },
         userLoggedOut() {
@@ -16,3 +17,4 @@ const userSlice = createSlice({
 })
 
 export default userSlice.reducer
+export const { userLoggedIn, userLoggedOut } = userSlice.actions
