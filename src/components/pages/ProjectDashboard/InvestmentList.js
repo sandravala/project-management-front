@@ -4,7 +4,9 @@ import {
 } from "../../../api/projectsApi";
 import * as React from "react";
 import {
-    CircularProgress, MenuItem,
+    Button,
+    CircularProgress, 
+    MenuItem,
     Table,
     TableBody,
     TableCell,
@@ -20,6 +22,7 @@ import EditSharpIcon from '@mui/icons-material/EditSharp';
 import DoneOutlineSharpIcon from '@mui/icons-material/DoneOutlineSharp';
 import { DateField } from '@mui/x-date-pickers/DateField';
 import {useTranslation} from "react-i18next";
+import NewInvestmentModal from "./NewInvestmentModal";
 
 
 
@@ -45,6 +48,7 @@ const InvestmentList = () => {
     const {t} = useTranslation();
 
     const [rowIndex, setRowIndex] = useState(-1);
+    const [openInvModal, setOpenInvModal] = useState(false);
 
 
     const loadingElement = isLoading && (
@@ -128,6 +132,23 @@ const InvestmentList = () => {
         return (
             loadingElement ||
             <Paper sx={{ width: '100%', height: '70%', overflow: 'hidden' }}>
+                
+                    <NewInvestmentModal open={openInvModal} onClose={() => setOpenInvModal(false)} projectId={id}/>
+
+                    <div style={{ marginTop: "10px", marginBottom: "10px", textAlign: "right" }}>
+                        <Button
+                            variant="outlined"
+                            color="secondary"
+                            sx={{
+                                border: "2px solid"
+                            }}
+                            onClick={() => {
+                                setOpenInvModal(true);
+                            }}
+                        >
+                            {t("addNewInv")}
+                        </Button>
+                    </div>
                 <TableContainer sx={{ maxHeight: 440 }}>
                     <Table stickyHeader aria-label="sticky table">
                         <TableHead>

@@ -1,14 +1,15 @@
 import  * as React from 'react';
 import { Form, Formik, Field} from 'formik';
 import * as yup from 'yup';
-import {Alert, Snackbar, TextField} from "@mui/material";
+import {Alert, Snackbar, TextField, MenuItem} from "@mui/material";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import {useSaveProject} from "../../api/projectsApi";
 import {useState} from "react";
-
-
+import { FieldFormik } from '../form/FieldFormik';
+import { useTranslation } from 'react-i18next';
+import { t } from 'i18next';
 
 
 const validationSchema = yup.object({
@@ -51,30 +52,88 @@ const validationSchema = yup.object({
 
 });
 
-export const FieldFormik = ({name, propsF}) => {
+const fieldNames = [
+    {
+        label: t("projectNo"),
+        name: "projectNo",
+        type: "text",
+        select: []
+    },
+    {
+        label: t("projectName"),
+        name: "name",
+        type: "text",
+        select: []
+    },
+    {
+        label: t("client"),
+        name: "client",
+        type: "text",
+        select: []
+    },
+    {
+        label: t("coordinator"),
+        name: "coordinator",
+        type: "text",
+        select: []
+    },
+    {
+        label: t("projectAlias"),
+        name: "projectAlias",
+        type: "text",
+        select: []
+    },
+    {
+        label: t("startDate"),
+        name: "startDate",
+        type: "date",
+        select: []
+    },
+    {
+        label: t("endDate"),
+        name: "endDate",
+        type: "date",
+        select: []
+    },
+    {
+        label: t("contractSigningDate"),
+        name: "contractSigningDate",
+        type: "date",
+        select: []
+    },
+    {
+        label: t("invEligibleCosts"),
+        name: "eligibleCosts",
+        type: "text",
+        select: []
+    },
+    {
+        label: t("invRate"),
+        name: "fundingRate",
+        type: "text",
+        select: []
+    },
+    {
+        label: t("invFundingAmount"),
+        name: "grantAmount",
+        type: "text",
+        select: []
+    },
+    {
+        label: t("indirectCostRate"),
+        name: "indirectCostRate",
+        type: "text",
+        select: []
+    },
+];
 
-    const fieldName = name.toString().charAt(0).toUpperCase() + name.toString().slice(1);
-
-    return (
-        <>
-            <Field label={fieldName}
-                   name={name}
-                   variant="standard"
-                   fullWidth
-                   margin="normal"
-                   error={!!propsF.errors[name] && propsF.touched[name]}
-                   helperText={propsF.touched[name] && propsF.errors[name]}
-                   as={TextField}
-            />
-            <Box pb={2.5} />
-        </>
-    )
-};
 
 const NewProject = () => {
     const saveProject = useSaveProject();
     const [alertOpen, setAlertOpen] = useState(false);
     const [savedProjectAlias, setSavedProjectAlias] = useState("");
+    const {t} = useTranslation();
+
     return (
         <Box sx={{ display: 'flex', justifyContent: 'flex-start'}}>
         <Container sx={{ width: "500px", marginLeft: '0'}}>
@@ -120,22 +179,19 @@ const NewProject = () => {
                 {(props) => {
                     return (
                         <Form id="projectForm">
-
-                            <FieldFormik name="projectNo" propsF={props}/>
-                            <FieldFormik name="name" propsF={props}/>
-                            <FieldFormik name="client" propsF={props}/>
-                            <FieldFormik name="coordinator" propsF={props}/>
-                            <FieldFormik name="projectAlias" propsF={props}/>
-                            <FieldFormik name="startDate" propsF={props}/>
-                            <FieldFormik name="endDate" propsF={props}/>
-                            <FieldFormik name="contractSigningDate" propsF={props}/>
-                            <FieldFormik name="eligibleCosts" propsF={props}/>
-                            <FieldFormik name="fundingRate" propsF={props}/>
-                            <FieldFormik name="grantAmount" propsF={props}/>
-                            <FieldFormik name="indirectCostRate" propsF={props}/>
-
+                            {
+                                fieldNames.map((field) => {
+                                    return <FieldFormik 
+                                    key={field.name}
+                                    type={field.type} 
+                                    select={field.select} 
+                                    label={field.label} 
+                                    name={field.name}
+                                    propsF={props}/>
+                                })
+                            }                           
                             <Button color="primary" variant="contained" type="submit" form="projectForm">
-                                Kurti
+                                {t("save")}
                             </Button>
                         </Form>
                     )
