@@ -118,65 +118,66 @@ const Project = ({selectedTab}) => {
         return (
 
                 <Box sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <Stack direction="row" spacing={2}>
-                                <Grid item xs={4}>
-                                    <IconButton aria-label="back"
-                                                sx={{
-                                                    padding: 0,
-                                                    color: "#0c2248",
-                                                    "& :hover": {
-                                                        color: "#fd2929",
-                                                        boxShadow: "rgb(126,134,157)",
-                                                    }
-                                                }}
-                                                onClick={() => navigate("/projects")}
-                                    >
-                                        <KeyboardBackspaceSharpIcon />
-                                    </IconButton>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Box sx={{ display: 'flex', justifyContent: 'center'}}>
-                                        <Typography component={'span'} variant="upperCaseBold">{pr.projectAlias}</Typography>
-                                    </Box>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Box sx={{ display: 'flex', justifyContent: 'right'}}>
-                                    <Countdown endOfProject={pr.endDate}/>
-                                    </Box>
-                                </Grid>
-                            </Stack>
-                            <Grid item xs={12}>
-                                <Divider sx={{
-                                    width: '100%',
-                                    maxWidth: '100%',
-                                    bgcolor: 'background.paper',
-                                    paddingTop: 2
-                                }}
-                                />
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <Stack direction="row" spacing={2}>
+                            <Grid item xs={4}>
+                                <IconButton aria-label="back" 
+                                            sx={{
+                                                padding: 0,
+                                                color: "#0c2248",
+                                                "& :hover": {
+                                                    color: "#fd2929",
+                                                    boxShadow: "rgb(126,134,157)",
+                                                }
+                                            }}
+                                            onClick={() => navigate("/projects")}
+                                >
+                                    <KeyboardBackspaceSharpIcon />
+                                </IconButton>
                             </Grid>
-                         </Grid>
-                        <Grid item xs={12}>
-                            <Box sx={{ width: '100%' }}>
-                                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                    <Tabs
-                                        value={tabValue}
-                                        onChange={handleChange}
-                                        centered>
-                                        <Tab label={t("projectGeneralInfo")} {...a11yProps(0)} />
-                                        <Tab label={t("projectProcurement")} {...a11yProps(1)} />
-                                    </Tabs>
+                            <Grid item xs={4}>
+                                <Box sx={{ display: 'flex', justifyContent: 'center'}}>
+                                    <Typography component={'span'} variant="upperCaseBold">{pr.projectAlias}</Typography>
                                 </Box>
-                                <TabPanel value={tabValue} index={0}>
-                                    <GeneralProjectInfo Item={Item} Pr={pr}/>
-                                </TabPanel>
-                                <TabPanel value={tabValue} index={1}>
-                                    <InvestmentList/>
-                                </TabPanel>
-                            </Box>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Box sx={{ display: 'flex', justifyContent: 'right'}}>
+                                <Countdown endOfProject={pr.endDate}/>
+                                </Box>
+                            </Grid>
+                        </Stack>
+                        <Grid item xs={12}>
+                            <Divider sx={{
+                                width: '100%',
+                                maxWidth: '100%',
+                                bgcolor: 'background.paper',
+                                paddingTop: 2
+                            }}
+                            />
                         </Grid>
                     </Grid>
+
+                    <Grid item xs={12}>
+                        <Box sx={{ width: '100%' }}>
+                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                <Tabs
+                                    value={tabValue}
+                                    onChange={handleChange}
+                                    centered>
+                                    <Tab label={t("projectGeneralInfo")} {...a11yProps(0)} />
+                                    <Tab label={t("projectProcurement")} {...a11yProps(1)} />
+                                </Tabs>
+                            </Box>
+                            <TabPanel value={tabValue} index={0}>
+                                <GeneralProjectInfo Item={Item} Pr={pr}/>
+                            </TabPanel>
+                            <TabPanel value={tabValue} index={1}>
+                                <InvestmentList projectId={id}/>
+                            </TabPanel>
+                        </Box>
+                    </Grid>
+                </Grid>
                 </Box>
         )
     }

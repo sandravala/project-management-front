@@ -1,36 +1,37 @@
-import {useNavigate, useParams} from "react-router-dom";
+import { useParams} from "react-router-dom";
 import {
-    useInvestmentList, useProjects,
+    useInvestmentList, 
+    useSaveInvestment
 } from "../../../api/projectsApi";
 import * as React from "react";
 import {
     Button,
     CircularProgress, 
-    MenuItem,
     Table,
     TableBody,
     TableCell,
     TableContainer,
     TableHead,
     TablePagination,
-    TableRow, TextField
+    TableRow
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
-import IconButton from "@mui/material/IconButton";
+
 import {useState} from "react";
 import EditSharpIcon from '@mui/icons-material/EditSharp';
 import DoneOutlineSharpIcon from '@mui/icons-material/DoneOutlineSharp';
-import { DateField } from '@mui/x-date-pickers/DateField';
 import {useTranslation} from "react-i18next";
 import NewInvestmentModal from "./NewInvestmentModal";
-
-
+import Box from "@mui/material/Box";
+import { useSelector} from "react-redux";
+import { IconButtonStyled } from "../../otherComponents/IconButtonStyled";
+import FieldSimple from "../../otherComponents/FieldSimple";
 
 const InvestmentList = () => {
 
+    const user = useSelector(({user}) => user?.userDto);
     const {id} = useParams()
-    const { isLoading, isError, isSuccess, data, error } = useInvestmentList(id)
-    const navigate = useNavigate()
+    const { isLoading, data } = useInvestmentList(id)
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [invValues, setInvValues] = useState({
@@ -46,6 +47,7 @@ const InvestmentList = () => {
         projectId: parseInt(id)
     });
     const {t} = useTranslation();
+    const saveInvestment = useSaveInvestment();
 
     const [rowIndex, setRowIndex] = useState(-1);
     const [openInvModal, setOpenInvModal] = useState(false);
@@ -67,27 +69,20 @@ const InvestmentList = () => {
     };
 
     const handleEdit = (rowIndex, initialValues) => {
-        console.log(initialValues);
         Object.assign(invValues, initialValues);
         setInvValues(invValues);
-        console.log(invValues);
         setRowIndex(rowIndex);
-        //setEditing(!editing); // cia paskui reikes nuimti, palikti tik row index ir kita mygtuka
     }
 
     const handleChangeValues = (e) => {
         setInvValues({ ...invValues, [e.target.name]: e.target.value });
     }
 
-    const handleSubmit = (invId) => {
+    const handleSubmit = (async(invId) => {
         setInvValues({ ...invValues, [id]: invId });
-        console.log(invValues);
+        await saveInvestment(invValues);
         setRowIndex(-1);
-    }
-
-    if(isError) {
-        return <span>Error: {error.message }</span>
-    }
+    })
 
     const procurementStates = [
         "planuojama",
@@ -101,21 +96,22 @@ const InvestmentList = () => {
         "Konkursas"
     ]
 
-        const rows = data && data.map((item) => {
-            const link = "/projects/" + item.id;
-            return {
-                id: item.id,
-                procurementType: item.procurementType,
-                name: item.name,
-                plannedCostAmount: item.plannedCostAmount,
-                actualContractCosts: item.actualContractCosts,
-                fundingRate: item.fundingRate,
-                fundingAmount: item.fundingAmount,
-                procurementDeadline: item.procurementDeadline,
-                procurementState: item.procurementState,
-                projectId: item.projectId
-            };
-        })
+
+    const rows = data && data.map((item) => {
+        const link = "/projects/" + item.id;
+        return {
+            id: item.id,
+            procurementType: item.procurementType,
+            name: item.name,
+            plannedCostAmount: item.plannedCostAmount,
+            actualContractCosts: item.actualContractCosts,
+            fundingRate: item.fundingRate,
+            fundingAmount: item.fundingAmount,
+            procurementDeadline: item.procurementDeadline,
+            procurementState: item.procurementState,
+            projectId: item.projectId
+        };
+    })
 
 
         const columns = [
@@ -123,181 +119,119 @@ const InvestmentList = () => {
             { id: 1, field: "procurementType", label: t("invPrType"), flex: 1, align: "left" },
             { id: 2, field: "plannedCostAmount", label: t("invEligibleCosts"), flex: 0.3, align: "left" },
             { id: 3, field: "actualContractCosts", label: t("invActualCosts"), flex: 0.3, align: "left" },
-            // { id: 4, field: "fundingRate", label: "Finansavimo %", flex: 0.3, align: "left" },
             { id: 5, field: "fundingAmount", label: t("invFundingAmount"), flex: 0.3, align: "left" },
             { id: 6, field: "procurementDeadline", label: t("invDeadline"), flex: 0.3, align: "left" },
             { id: 7, field: "procurementState", label: t("invState"), flex: 1, align: "left" },
         ];
 
-        return (
-            loadingElement ||
-            <Paper sx={{ width: '100%', height: '70%', overflow: 'hidden' }}>
-                
-                    <NewInvestmentModal open={openInvModal} onClose={() => setOpenInvModal(false)} projectId={id}/>
-
-                    <div style={{ marginTop: "10px", marginBottom: "10px", textAlign: "right" }}>
-                        <Button
-                            variant="outlined"
-                            color="secondary"
-                            sx={{
-                                border: "2px solid"
-                            }}
-                            onClick={() => {
-                                setOpenInvModal(true);
-                            }}
-                        >
-                            {t("addNewInv")}
-                        </Button>
-                    </div>
-                <TableContainer sx={{ maxHeight: 440 }}>
-                    <Table stickyHeader aria-label="sticky table">
-                        <TableHead>
-                            <TableRow sx={{
-                                "& th": {
-                                    fontSize: "1rem",
-                                    color: "rgb(255,255,255)",
-                                    backgroundColor: "rgb(12,34,72)"
-                                }
-                            }}
-                            >
-                                {columns.map((column) => (
-                                    <TableCell
-                                        key={column.id}
-                                        align={column.align}
-                                        style={{ flex: column.flex }}
-                                    >
-                                        {column.label}
-                                    </TableCell>
-                                ))}
-                                <TableCell
-                                    key={4}
-                                    align="center"
-                                    style={{flex: 0.5}}
+    return (
+        loadingElement ||
+        <Paper sx={{ width: '100%', height: '70%', overflow: 'hidden' }}>
+            <NewInvestmentModal open={openInvModal} onClose={() => setOpenInvModal(false)} projectId={id} />
+            <div style={{ marginTop: "10px", marginBottom: "10px", textAlign: "right" }}>
+                {user?.id && (
+                    <Button
+                        variant="outlined"
+                        color="secondary"
+                        sx={{
+                            border: "2px solid"
+                        }}
+                        onClick={() => {
+                            setOpenInvModal(true);
+                        }}
+                    >
+                        {t("addNewInv")}
+                    </Button>
+                )}
+            </div>
+            
+            <Box sx={{ overflow: "auto" }}>
+                <Box sx={{ width: "100%", display: "table", tableLayout: "fixed" }}>
+                    <TableContainer sx={{ maxHeight: 440 }}>
+                        <Table stickyHeader aria-label="sticky table">
+                           
+                            <TableHead>
+                                <TableRow sx={{
+                                    "& th": {
+                                        fontSize: "1rem",
+                                        color: "rgb(255,255,255)",
+                                        backgroundColor: "rgb(12,34,72)"
+                                    }
+                                }}
                                 >
-                                    {t("invEdit")}
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {rows
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row, index) => {
-                                    return (
-                                        <TableRow hover role="checkbox" tabIndex={-1} key={index + row.name}>
-                                            {columns.map((column) => {
-
-                                                const value = isNaN(row[column.field]) ? row[column.field] : row[column.field].toLocaleString('lt-LT', { style: 'currency', currency: 'EUR' });
-
-                                                const DropDownState = column.field === "procurementState" && (
-                                                    <TextField
-                                                        size="small"
-                                                        select
-                                                        defaultValue={value}
-                                                        id={column.field}
-                                                        name={column.field}
-                                                        onChange={handleChangeValues}
-                                                    >
-                                                        {procurementStates.map((option) => (
-                                                            <MenuItem key={option} value={option}>
-                                                                {option}
-                                                            </MenuItem>
-                                                        ))}
-                                                    </TextField>
-                                                )
-                                                const DropDownType = column.field === "procurementType" && (
-                                                    <TextField
-                                                        size="small"
-                                                        select
-                                                        defaultValue={value}
-                                                        id={column.field}
-                                                        name={column.field}
-                                                        onChange={handleChangeValues}
-                                                    >
-                                                        {procurementTypes.map((option) => (
-                                                            <MenuItem key={option} value={option}>
-                                                                {option}
-                                                            </MenuItem>
-                                                        ))}
-                                                    </TextField>
-                                                )
-                                                const MyDateField = column.field === "procurementDeadline" && (
-                                                    <TextField
-                                                        size="small"
-                                                        type="date"
-                                                        defaultValue={value}
-                                                        id={column.field}
-                                                        name={column.field}
-                                                        InputProps={{inputProps: { min: "2010-05-01", max: "2030-05-04"} }}
-                                                        onChange={handleChangeValues}
-                                                    />
-                                                )
-                                                const MyTextField = column.field !== "procurementState" && (
-                                                    <TextField size="small" defaultValue={value} id={column.field} name={column.field} onChange={handleChangeValues}/>
-                                                )
+                                    {columns.map((column) => (
+                                        <TableCell
+                                            key={column.id}
+                                            align={column.align}
+                                            style={{ flex: column.flex }}
+                                        >
+                                            {column.label}
+                                        </TableCell>
+                                    ))}
+                                    {/* { user?.id && ( */}
+                                    <TableCell
+                                        key={4}
+                                        align="center"
+                                        style={{ flex: 0.5 }}
+                                    >
+                                        {t("invEdit")}
+                                    </TableCell>
+                                    {/* )} */}
+                                </TableRow>
+                            </TableHead>
 
 
-                                                const cell = index === rowIndex ? MyDateField || DropDownState || DropDownType || MyTextField : value;
-                                                return (
-                                                    <TableCell key={column.id} align={column.align}>
-                                                        {cell}
-                                                    </TableCell>
-                                                );
-                                            })}
-                                            <TableCell key={4} align="center" >
-                                                {
-                                                    index !== rowIndex ?
-                                                <IconButton
-                                                    sx={{
-                                                        color: "#0c2248",
-                                                        "& :hover": {
-                                                            color: "#fd2929",
-                                                            boxShadow: "rgb(126,134,157)",
-                                                        }
-                                                    }}
-                                                    onClick={() => handleEdit(index, row)}>
-                                                    <EditSharpIcon/>
-                                                </IconButton>
-                                                        :
-                                                <IconButton
-                                                    sx={{
-                                                        color: "#0c2248",
-                                                        "& :hover": {
-                                                            color: "#fd2929",
-                                                            boxShadow: "rgb(126,134,157)",
-                                                        }
-                                                    }}
-                                                    onClick={() => handleSubmit(row.id)}>
-                                                    <DoneOutlineSharpIcon/>
-                                                </IconButton>
+                            <TableBody>
+                                {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => {
+                                        return (
+                                            <TableRow hover role="checkbox" tabIndex={-1} key={index + row.name}>
+                                                {columns.map((column) => {
+                                                    return (
+                                                        <TableCell key={column.id} align={column.align}>
+                                                            <FieldSimple
+                                                                rowData={row[column.field]}
+                                                                columnName={column.field}
+                                                                selectList={[procurementStates, procurementTypes]}
+                                                                handleChangeValues={handleChangeValues}
+                                                                i={index}
+                                                                row={rowIndex}
+                                                            />
+                                                        </TableCell>
+                                                    );
+                                                })}
 
-                                                }
-                                            </TableCell>
-                                        </TableRow>
-                                    );
-                                })}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <TablePagination
-                    rowsPerPageOptions={[10, 25, 50]}
-                    component="div"
-                    count={rows.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-            </Paper>
-        );
+                                                {/* { user?.id && ( */}
+                                                <TableCell key={4} align="center" >
+                                                    {
+                                                        index !== rowIndex ?
+                                                            <IconButtonStyled icon={<EditSharpIcon />} OnClickFunction={() => handleEdit(index, row)} />
+                                                            :
+                                                            <IconButtonStyled icon={<DoneOutlineSharpIcon />} OnClickFunction={() => handleSubmit(row.id)} />
+                                                    }
+                                                </TableCell>
+                                                {/* )} */}
+                                            </TableRow>
+                                        );
+                                    })}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+
+                    <TablePagination
+                        rowsPerPageOptions={[10, 25, 50]}
+                        component="div"
+                        count={rows.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                </Box>
+            </Box>
+        </Paper>
+    );
 
 }
 
 
-// const iListNull = !data.length && (
-//     <h1>No investments yet!</h1>
-// );
-//
-// const iListFull =  data.map((inv, i) =>(
-//     <span key={i}>{(++i) + ", inv. pavadinimas: "}{inv.name + ", deadline: "}{inv.procurementDeadline + " "}{", projekto id: " + inv.projectId}</span>
-// ));
 export default InvestmentList

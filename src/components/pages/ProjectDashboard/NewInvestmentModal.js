@@ -11,7 +11,7 @@ import {
     TextField,
 } from "@mui/material";
 import {Formik, Form} from "formik";
-import { FieldFormik } from "../../form/FieldFormik";
+import { FieldFormik } from "../../otherComponents/FieldFormik"
 import * as yup from 'yup';
 import { useTranslation } from "react-i18next";
 import { useSaveInvestment } from "../../../api/projectsApi";
@@ -23,8 +23,8 @@ const saveInvestment = useSaveInvestment();
 
 const productValidationSchema = yup.object().shape({
     procurementDeadline: yup
-    .date('Pabaigos data')
-    .required()
+    .date()
+    .required(t("required")),
 })
 
     const [alertOpen, setAlertOpen] = React.useState(false);
@@ -109,13 +109,12 @@ const productValidationSchema = yup.object().shape({
 
     return (
         <>
-            <Dialog fullWidth="true" open={open} onClose={onClose}>
+            <Dialog fullWidth={true} open={open} onClose={onClose}>
                 <DialogTitle>{title}</DialogTitle>
 
                 <Formik initialValues={initialValues}
                         onSubmit={async (values, {setSubmitting}) => {
                             const newInvToAdd = {...initialValues, ...values};
-                            console.log("formik id: " + projectId + " inv: "+newInvToAdd);
                             await saveInvestment(newInvToAdd)
 
                             setSubmitting(false)

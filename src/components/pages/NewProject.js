@@ -7,132 +7,74 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import {useSaveProject} from "../../api/projectsApi";
 import {useState} from "react";
-import { FieldFormik } from '../form/FieldFormik';
+import { FieldFormik } from '../otherComponents/FieldFormik';
 import { useTranslation } from 'react-i18next';
-import { t } from 'i18next';
-
-
-const validationSchema = yup.object({
-    projectNo: yup
-        .string('Projekto numeris')
-        .required('privaloma nurodyti'),
-    name: yup
-        .string('Pilnas projekto pavadinimas')
-        .required('privaloma nurodyti'),
-    client: yup
-        .string('Kliento pavadinimas')
-        .required('privaloma nurodyti'),
-    coordinator: yup
-        .string('PV emailas')
-        .email('reikia nurodyti emailą')
-        .required('privaloma nurodyti'),
-    projectAlias: yup
-        .string('Vidinis projekto pavadinimas')
-        .matches(/^\d+\.\d+\.\s[a-zA-Z]+(?:\s[a-zA-Z]+)*$/)
-        .required('privaloma nurodyti'),
-    startDate: yup
-        .date('Pradžios data'),
-    endDate: yup
-        .date('Pabaigos data'),
-    contractSigningDate: yup
-        .date('Sutarties data'),
-    eligibleCosts: yup
-        .number('TFI')
-        .required('privaloma nurodyti'),
-    fundingRate: yup
-        .number('Finansavimo intensyvumas')
-        .max(1, 'Nurodyti 0.<...> formatu')
-        .required('privaloma nurodyti'),
-    grantAmount: yup
-        .number('Finansavimo suma')
-        .max(yup.ref('eligibleCosts'), 'Finansavimas negali būti didesnis už TFI!')
-        .required('privaloma nurodyti'),
-    indirectCostRate: yup
-        .string('Netiesioginės išlaidos'),
-
-});
-
-const fieldNames = [
-    {
-        label: t("projectNo"),
-        name: "projectNo",
-        type: "text",
-        select: []
-    },
-    {
-        label: t("projectName"),
-        name: "name",
-        type: "text",
-        select: []
-    },
-    {
-        label: t("client"),
-        name: "client",
-        type: "text",
-        select: []
-    },
-    {
-        label: t("coordinator"),
-        name: "coordinator",
-        type: "text",
-        select: []
-    },
-    {
-        label: t("projectAlias"),
-        name: "projectAlias",
-        type: "text",
-        select: []
-    },
-    {
-        label: t("startDate"),
-        name: "startDate",
-        type: "date",
-        select: []
-    },
-    {
-        label: t("endDate"),
-        name: "endDate",
-        type: "date",
-        select: []
-    },
-    {
-        label: t("contractSigningDate"),
-        name: "contractSigningDate",
-        type: "date",
-        select: []
-    },
-    {
-        label: t("invEligibleCosts"),
-        name: "eligibleCosts",
-        type: "text",
-        select: []
-    },
-    {
-        label: t("invRate"),
-        name: "fundingRate",
-        type: "text",
-        select: []
-    },
-    {
-        label: t("invFundingAmount"),
-        name: "grantAmount",
-        type: "text",
-        select: []
-    },
-    {
-        label: t("indirectCostRate"),
-        name: "indirectCostRate",
-        type: "text",
-        select: []
-    },
-];
-
 
 const NewProject = () => {
+
     const saveProject = useSaveProject();
     const [alertOpen, setAlertOpen] = useState(false);
     const [savedProjectAlias, setSavedProjectAlias] = useState("");
     const {t} = useTranslation();
+
+const validationSchema = yup.object({
+    projectNo: yup
+        .string()
+        .required(t("required")),
+    name: yup
+        .string()
+        .required(t("required")),
+    client: yup
+        .string()
+        .required(t("required")),
+    coordinator: yup
+        .string()
+        .email()
+        .required(t("required")),
+    projectAlias: yup
+        .string()
+        .matches(/^\d+\.\d+\.\s[a-zA-Z]+(?:\s[a-zA-Z]+)*$/, t("yupAlias"))
+        .required(t("required")),
+    startDate: yup
+        .date(),
+    endDate: yup
+        .date(),
+    contractSigningDate: yup
+        .date(),
+    eligibleCosts: yup
+        .number()
+        .required(t("required")),
+    fundingRate: yup
+        .number()
+        .max(1, t("yupFundingRate"))
+        .required(t("required")),
+    grantAmount: yup
+        .number()
+        .max(yup.ref('eligibleCosts'), 'Finansavimas negali būti didesnis už TFI!')
+        .required(t("required")),
+    indirectCostRate: yup
+        .string(),
+
+});
+
+const fieldNames = [
+    { label: t("projectNo"), name: "projectNo", type: "text", select: [] },
+    { label: t("projectName"), name: "name", type: "text", select: [] },
+    { label: t("client"), name: "client", type: "text", select: [] },
+    { label: t("coordinator"), name: "coordinator", type: "text", select: [] },
+    { label: t("projectAlias"), name: "projectAlias", type: "text", select: [] },
+    { label: t("startDate"), name: "startDate", type: "date", select: [] },
+    { label: t("endDate"), name: "endDate", type: "date", select: [] },
+    { label: t("contractSigningDate"), name: "contractSigningDate", type: "date", select: [] },
+    { label: t("invEligibleCosts"), name: "eligibleCosts", type: "text", select: [] },
+    { label: t("invRate"), name: "fundingRate", type: "text", select: [] },
+    { label: t("invFundingAmount"), name: "grantAmount", type: "text", select: [] },
+    { label: t("indirectCostRate"), name: "indirectCostRate", type: "text", select: [] },
+];
+
+
+
+
 
     return (
         <Box sx={{ display: 'flex', justifyContent: 'flex-start'}}>

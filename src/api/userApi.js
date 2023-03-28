@@ -3,4 +3,7 @@ import HTTP from "./";
 const login = (loginData) => HTTP.post("/login", loginData)
     .then(({ data }) => data)
 
-export { login }
+const signUp = (signupData) => HTTP.post("/user", signupData)
+    .then(({data}) => data)
+
+export { login, signUp }

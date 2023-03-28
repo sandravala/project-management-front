@@ -5,10 +5,12 @@
     "menuMyProjects": "Mano projektai",
     "menuProjects": "Visi projektai",
     "menuCreateProject": "Kurti naują projektą",
+
     "timerText": "IKI PABAIGOS LIKO:",
     "timerYear": "M",
     "timerMonth": "MĖN",
     "timerDay": "D",
+
     "projectNo": "PROJEKTO NR:",
     "projectName": "PAVADINIMAS:",
     "projectContract": "SUTARTIS:",
@@ -20,6 +22,7 @@
     "projectLoading": "Krauna...",
     "projectGeneralInfo": "BENDRA INFORMACIJA",
     "projectProcurement": "PIRKIMAI",
+
     "invName": "Pavadinimas",
     "invPrType": "Pirkimo būdas",
     "invEligibleCosts": "TFI",
@@ -29,16 +32,35 @@
     "invState": "Būsena",
     "invEdit": "Redaguoti",
     "invRate" : "Finansavimo intensyvumas",
+
     "newInvModalTitle": "Pridėti investiciją",
-    "addNewInv" : "Kurti naujas",
+    "addNewInv" : "Pridėti naują",
     "cancel" : "atšaukti",
     "save" : "saugoti",
+
     "client": "Klientas",
     "coordinator": "Koordinatorė",
     "projectAlias": "Vidinis projekto pavadinimas",
     "startDate": "Projekto pradžia",
     "endDate": "Projekto pabaiga",
     "contractSigningDate": "Sutarties pasirašymo data",
-    "indirectCostRate": "Netiesioginių išlaidų proc."
+    "indirectCostRate": "Netiesioginių išlaidų proc.",
+
+    "required" : "Privaloma nurodyti!",
+    "yupAlias" : "Projekto vidinis pavadinimas turi atitikti šabloną: X.X. Projektas (X yra bet koks skaičius)",
+    "yupFundingRate" : "Nurodyti 0.<...> formatu (skaičius tarp 0 ir 1)",
+    "yupGrantAmount" : "Finansavimo suma negali viršyti TFI!",
+
+    "homeGreeting" : "LABA DIENA, GERB.  ",
+    "login" : "PRISIJUNGTI",
+    "signup" : "KURTI PASKYRĄ",
+
+    "userName" : "Vardas",
+    "userSurname" : "Pavardė",
+    "userPassword" : "Slaptažodis",
+    "userOrganisation" : "Įmonė",
+    "userEmail" : "El. paštas",
+    "userCreated" : "Paskyra sukurta. Prisijunkite",
+    "exists" : "Paskyra su tokiu el.pašto adresu jau egzistuoja! Prisijunkite arba sukurkite naują paskyrą"
 }
 

@@ -28,7 +28,8 @@ const SVtheme = createTheme({
             fontSize: 14,
             color: "#444444"
         }
-    }
+    },
+
 });
 
 export default SVtheme

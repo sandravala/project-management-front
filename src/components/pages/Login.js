@@ -1,28 +1,37 @@
-import {Button, TextField} from "@mui/material";
+import { Button, TextField} from "@mui/material";
 import Box from "@mui/material/Box";
 import {Field, Form, Formik} from "formik";
 import * as React from "react";
 import * as Yup from 'yup'
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {login} from "../../api/userApi";
-import {userLoggedIn} from "../../store/slices/UserSlice"
+import {userLoggedIn} from "../../store/slices/UserSlice";
+import { useTranslation } from "react-i18next";
+import {useState} from "react";
+import SignUp from "./SignUp";
 
-const loginValidationSchema = Yup.object().shape({
-    email: Yup.string()
-        .email()
-        .required(),
-    password: Yup.string()
-        .required()
-})
 
 const Login = () => {
-
     const dispatch = useDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const user = useSelector(({user}) => user?.userDto);
+    const {t} = useTranslation();
+    const [openSignUp, setOpenSignUp] = useState(false);
+    const [openAlert, setOpenAlert] = useState(false);
+
+    const loginValidationSchema = Yup.object().shape({
+        email: Yup.string()
+            .email()
+            .required(),
+        password: Yup.string()
+            .required()
+    })
+
 
     return (
         <>
+
             <Box
                 noValidate
                 autoComplete="off"
@@ -30,6 +39,7 @@ const Login = () => {
                     width: 300
                 }}
             >
+
                 <Formik
                     initialValues={{
                         email: '',
@@ -48,7 +58,9 @@ const Login = () => {
                     }}
                     validationSchema={loginValidationSchema}>
                     {({errors, touched}) => (
-                        <Form>
+                        <Form style={{
+                            alignItems: "center"
+                        }}>
                             <Field id="email"
                                    name="email"
                                    label="Email"
@@ -70,11 +82,26 @@ const Login = () => {
                             />
                             <Button type="submit" sx={{
                                 marginTop: 2
-                            }} variant="contained">Login</Button>
+                            }} variant="contained">{t("login")}</Button>
+                            <SignUp open={openSignUp} onClose={() => setOpenSignUp(false)} onAlertClose={() => setOpenAlert(false)}/>
+                            <Button 
+                            type="button" 
+                            sx={{
+                                marginTop: 2,
+                                marginLeft: 2
+                            }} 
+                            variant="contained" 
+                            color="secondary" 
+                            onClick={() => setOpenSignUp(true)}
+                            >
+                                {t("signup")}
+                            </Button>
                         </Form>
                     )}
                 </Formik>
+                
             </Box>
+
         </>
     )
 }

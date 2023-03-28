@@ -9,6 +9,7 @@
     "timerYear": "Y",
     "timerMonth": "M",
     "timerDay": "D",
+
     "projectNo": "PROJECT NO:",
     "projectName": "NAME:",
     "projectContract": "CONTRACT:",
@@ -20,6 +21,7 @@
     "projectLoading": "Loading...",
     "projectGeneralInfo": "GENERAL INFO",
     "projectProcurement": "PROCUREMENT",
+
     "invName": "Name",
     "invPrType": "Procurement type",
     "invEligibleCosts": "Eligible costs",
@@ -29,15 +31,34 @@
     "invState": "State",
     "invEdit": "Edit",
     "invRate" : "Financing rate",
+
     "newInvModalTitle": "Add new investment",
     "addNewInv" : "Add new",
     "cancel" : "cancel",
     "save" : "save",
+
     "client": "Client",
     "coordinator": "Coordinator",
     "projectAlias": "Project Alias",
     "startDate": "Project start date",
     "endDate": "Project end date",
     "contractSigningDate": "Contract signing date",
-    "indirectCostRate": "Indirect cost rate"
+    "indirectCostRate": "Indirect cost rate",
+
+    "required" : "required!",
+    "yupAlias" : "Project alias should match this template: X.X. Project name (where X is any number)",
+    "yupFundingRate" : "Required formatis:  0.<...> (number between 0 and 1)",
+    "yupGrantAmount" : "Grant amount can't exceed eligible costs!",
+
+    "homeGreeting" : "WELL HELLO THERE, ",
+    "login" : "LOGIN",
+    "signup" : "SIGN UP",
+
+    "userName" : "Name",
+    "userSurname" : "Surname",
+    "userPassword" : "Password",
+    "userOrganisation" : "Organisation",
+    "userEmail" : "Email",
+    "created" : "User created. Please login",
+    "exists" : "User already exists! Please login or create new account"
 }

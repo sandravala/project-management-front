@@ -3,6 +3,8 @@ import {useMutation, useQuery, useQueryClient} from "react-query";
 import axios from "axios";
 
 
+
+
 const useProjects = () => {
     const getProjects = () =>
     HTTP.get("/projects")
@@ -80,6 +82,7 @@ const useDeleteProject = () => {
     const deleteProject = (id) => HTTP.delete(`/projects/?id=${id}`)
 
     const queryClient = useQueryClient();
+    
     const mutation = useMutation(deleteProject, {onSettled: () => {
         void queryClient.invalidateQueries({ queryKey: ['getProjects'] })
         void queryClient.invalidateQueries({ queryKey: ['getMyProjects'] })
@@ -87,21 +90,14 @@ const useDeleteProject = () => {
     return mutation.mutateAsync
 }
 
-const useSaveInvestment = (config) => {
+const useSaveInvestment = () => {
 
-    const saveInvestment = (investment) => HTTP.post(`/projects/${investment.projectId}/iList`, investment)
-    // async function saveInvestment(id, investment) {
-    //     try {
-    //         console.log(" projects api id: " + id + "investment: " + investment);
-    //         const response = await HTTP.post(`/projects/${id}/iList`, investment);
-    //         return response.data
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    
-    // }
+    const saveInvestment = (investment) => HTTP.post(`/projects/${investment.projectId}/iList`, investment);
+    const queryClient = useQueryClient();
 
-    const mutation = useMutation(saveInvestment, config);
+    const mutation = useMutation(saveInvestment, {onSettled: () => {
+        void queryClient.invalidateQueries({ queryKey: ['viewInvestmentList'] })
+    }});
     return mutation.mutateAsync
 }
 
