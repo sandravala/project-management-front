@@ -3,7 +3,6 @@ import {
     TextField
 } from "@mui/material";
 
-
 const FieldSimple = ({columnName, rowData, handleChangeValues, selectList, i, row}) => {
     
 const value = isNaN(rowData) ? rowData : rowData.toLocaleString('lt-LT', { style: 'currency', currency: 'EUR' });

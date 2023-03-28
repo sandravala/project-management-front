@@ -8,6 +8,7 @@ import NewProject from "../pages/NewProject";
 import MyProjects from "../pages/MyProjects";
 import {useSelector} from "react-redux";
 import Login from "../pages/Login";
+import UserRoleSettings from "../pages/UserRoleSettings";
 
 
 
@@ -24,6 +25,7 @@ return (
         <Route path="/projects/:id" element={<Project selectedTab={0}/>}/>
         <Route path="/projects/:id/iList" element={<Project selectedTab={1} />}/>
         <Route path="/projects/save" element={<NewProject />}/>
+        <Route path="/users" element={<UserRoleSettings />}/>
 
     </Routes>
 )

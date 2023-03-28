@@ -23,8 +23,16 @@ export const FieldFormik = ({type, select, label, name, propsF}) => {
     const handleMouseDownPassword = (event) => {
         event.preventDefault()};
 
+    const MySpecialField = ({ field, label }) => {
+        return (
+            <label className="text-gray-500 font-bold">
+            <input {...field} className="mr-2 leading-tight" type="checkbox" />
+            <span className="text-sm">{label}</span>
+            </label>
+        );
+        };
 
-    const selectField = (
+    const selectField = type === "select" && (
         <>
             <Field
             label={label}
@@ -47,7 +55,7 @@ export const FieldFormik = ({type, select, label, name, propsF}) => {
         </>
     )
 
-    const dateField = (
+    const dateField = type === "date" && (
         <>
         <Field  
                 label={label}
@@ -66,7 +74,7 @@ export const FieldFormik = ({type, select, label, name, propsF}) => {
         </>
     )
 
-    const simpleTextField = (        
+    const simpleTextField = type === "text" && (        
         <>
         <Field
                 label={label}
@@ -81,7 +89,7 @@ export const FieldFormik = ({type, select, label, name, propsF}) => {
         <Box pb={2.5} />
         </>)
 
-        const passwordField = (
+        const passwordField = type === "password" && (
             <>
             <Field
                     label={label}
@@ -112,9 +120,28 @@ export const FieldFormik = ({type, select, label, name, propsF}) => {
             <Box pb={2.5} />
             </>
 
-
         )
 
-    return type === "text" ? simpleTextField : type === "date" ? dateField : type === "select" ? selectField : passwordField;
+        const checkBox = type === "checkBox" && (
+            <>
+            {/* <Field
+                    label={label}
+                    name={name}
+                    margin="normal"
+            >
+                <input type="checkbox" checked={name.value} />
+            </Field> */}
+            <Field
+                  name={name}
+                  type="checkbox"
+                  component={<MySpecialField field={name} label={label}/>}
+                />
+            <Box pb={2.5} />
+            </>
+        )
+
+        const fieldToRender = simpleTextField || dateField || selectField || passwordField || checkBox;
+
+    return fieldToRender;
 
 };
