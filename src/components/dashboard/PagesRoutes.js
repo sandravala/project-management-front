@@ -30,7 +30,10 @@ return (
         <Route path="/projects/my" element={<MyProjects user={user}/>}/>
         <Route path="/projects/:id" element={<Project selectedTab={0}/>}/>
         <Route path="/projects/:id/iList" element={<Project selectedTab={1} />}/>
-        <Route path="/projects/save" element={<NewProject />}/>
+        <Route path="/projects/save" element={
+                <ProtectedRoute roles={["ADMIN"]}>
+                        <NewProject />
+                </ProtectedRoute>}/>
         <Route path="/users" element={
         <ProtectedRoute roles={["ADMIN"]}>
                         <UserRoleSettings/>

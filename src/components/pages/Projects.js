@@ -22,7 +22,7 @@ import { useSelector } from 'react-redux';
 const Projects = () => {
     const user = useSelector(({persistedUser}) =>  persistedUser?.userDto);
     const hasAccess = (roles) => user?.roles.some(r => roles.includes(r));
-    
+
     const navigate = useNavigate()
     const { isLoading, projects } = useProjects()
     const deleteProject = useDeleteProject();
@@ -47,7 +47,7 @@ const Projects = () => {
         </div>
     )
 
-    const rows = projects && projects.map((item) => {
+    const allRows = projects && projects.map((item) => {
         const link = "/projects/" + item.id;
         return {
             id: item.id,
@@ -67,6 +67,11 @@ const Projects = () => {
         };
     })
 
+    const filteredRows = allRows?.filter(row => {
+        return row.client === user?.organisation;
+      });
+
+    const rows = hasAccess(["CLIENT"]) ? filteredRows : allRows;
 
     const columns = [
         { id: 0, field: "projectAlias", label: "Projektas", flex: 0.5, align: "left" },

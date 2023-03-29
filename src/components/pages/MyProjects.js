@@ -71,6 +71,8 @@ const MyProjects = ({user}) => {
     })
 
 
+
+
     const columns = [
         { id: 0, field: "projectAlias", label: "Projektas", flex: 0.5, align: "left" },
         { id: 1, field: "name", label: "Projekto pavadinimas", flex: 1, align: "left" },
