@@ -101,8 +101,29 @@ const useSaveInvestment = () => {
     return mutation.mutateAsync
 }
 
+const useDeleteInv = () => {
+
+    const deleteInv = (invId) => HTTP.delete(`/projects/iList?id=${invId}`)
+
+    const queryClient = useQueryClient();
+    
+    const mutation = useMutation(deleteInv, {onSettled: () => {
+        void queryClient.invalidateQueries({ queryKey: ['viewInvestmentList'] })
+    }});
+    return mutation.mutateAsync
+}
 
 
-export { useProjects, useViewProject, useInvestmentList, useSaveProject, useDeleteProject, useMyProjects, useSaveInvestment }
+
+export { 
+    useProjects, 
+    useViewProject, 
+    useInvestmentList, 
+    useSaveProject, 
+    useDeleteProject, 
+    useMyProjects, 
+    useSaveInvestment,
+    useDeleteInv
+}
 
 

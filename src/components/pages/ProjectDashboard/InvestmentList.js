@@ -1,5 +1,6 @@
 import { useParams} from "react-router-dom";
 import {
+    useDeleteInv,
     useInvestmentList, 
     useSaveInvestment
 } from "../../../api/projectsApi";
@@ -26,14 +27,20 @@ import Box from "@mui/material/Box";
 import { useSelector} from "react-redux";
 import { IconButtonStyled } from "../../otherComponents/IconButtonStyled";
 import FieldSimple from "../../otherComponents/FieldSimple";
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 const InvestmentList = () => {
 
-    const user = useSelector(({user}) => user?.userDto);
+    const user = useSelector(({user}) => user?.userDto)
     const {id} = useParams()
     const { isLoading, data } = useInvestmentList(id)
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const saveInvestment = useSaveInvestment()
+    const deleteInvestment = useDeleteInv()
+    
+    const [rowIndex, setRowIndex] = useState(-1)
+    const [openInvModal, setOpenInvModal] = useState(false)
+    const [page, setPage] = useState(0)
+    const [rowsPerPage, setRowsPerPage] = useState(10)
     const [invValues, setInvValues] = useState({
         id: null,
         procurementType: "",
@@ -46,11 +53,7 @@ const InvestmentList = () => {
         procurementState: "",
         projectId: parseInt(id)
     });
-    const {t} = useTranslation();
-    const saveInvestment = useSaveInvestment();
-
-    const [rowIndex, setRowIndex] = useState(-1);
-    const [openInvModal, setOpenInvModal] = useState(false);
+    const {t} = useTranslation()
 
 
     const loadingElement = isLoading && (
@@ -84,6 +87,10 @@ const InvestmentList = () => {
         setRowIndex(-1);
     })
 
+    const handleDelete = ((invId) => {
+        deleteInvestment(invId);
+    })
+
     const procurementStates = [
         "planuojama",
         "vykdoma",
@@ -114,15 +121,15 @@ const InvestmentList = () => {
     })
 
 
-        const columns = [
-            { id: 0, field: "name", label: t("invName"), flex: 0.5, align: "left" },
-            { id: 1, field: "procurementType", label: t("invPrType"), flex: 1, align: "left" },
-            { id: 2, field: "plannedCostAmount", label: t("invEligibleCosts"), flex: 0.3, align: "left" },
-            { id: 3, field: "actualContractCosts", label: t("invActualCosts"), flex: 0.3, align: "left" },
-            { id: 5, field: "fundingAmount", label: t("invFundingAmount"), flex: 0.3, align: "left" },
-            { id: 6, field: "procurementDeadline", label: t("invDeadline"), flex: 0.3, align: "left" },
-            { id: 7, field: "procurementState", label: t("invState"), flex: 1, align: "left" },
-        ];
+    const columns = [
+        { id: 0, field: "name", label: t("invName"), flex: 0.5, align: "left" },
+        { id: 1, field: "procurementType", label: t("invPrType"), flex: 1, align: "left" },
+        { id: 2, field: "plannedCostAmount", label: t("invEligibleCosts"), flex: 0.3, align: "left" },
+        { id: 3, field: "actualContractCosts", label: t("invActualCosts"), flex: 0.3, align: "left" },
+        { id: 4, field: "fundingAmount", label: t("invFundingAmount"), flex: 0.3, align: "left" },
+        { id: 5, field: "procurementDeadline", label: t("invDeadline"), flex: 0.3, align: "left" },
+        { id: 6, field: "procurementState", label: t("invState"), flex: 1, align: "left" },
+    ];
 
     return (
         loadingElement ||
@@ -170,11 +177,20 @@ const InvestmentList = () => {
                                     ))}
                                     {/* { user?.id && ( */}
                                     <TableCell
-                                        key={4}
+                                        key={7}
                                         align="center"
                                         style={{ flex: 0.5 }}
                                     >
                                         {t("invEdit")}
+                                    </TableCell>
+                                    {/* )} */}
+                                    {/* { user?.id && ( */}
+                                    <TableCell
+                                        key={8}
+                                        align="center"
+                                        style={{ flex: 0.5 }}
+                                    >
+                                        {t("delete")}
                                     </TableCell>
                                     {/* )} */}
                                 </TableRow>
@@ -201,13 +217,18 @@ const InvestmentList = () => {
                                                 })}
 
                                                 {/* { user?.id && ( */}
-                                                <TableCell key={4} align="center" >
+                                                <TableCell key={7} align="center" >
                                                     {
                                                         index !== rowIndex ?
                                                             <IconButtonStyled icon={<EditSharpIcon />} OnClickFunction={() => handleEdit(index, row)} />
                                                             :
                                                             <IconButtonStyled icon={<DoneOutlineSharpIcon />} OnClickFunction={() => handleSubmit(row.id)} />
                                                     }
+                                                </TableCell>
+                                                {/* )} */}
+                                                {/* { user?.id && ( */}
+                                                <TableCell key={8} align="center" >
+                                                            <IconButtonStyled icon={<DeleteOutlineOutlinedIcon />} OnClickFunction={() => handleDelete(row.id)} />
                                                 </TableCell>
                                                 {/* )} */}
                                             </TableRow>

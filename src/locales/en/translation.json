@@ -10,6 +10,8 @@
     "timerMonth": "M",
     "timerDay": "D",
 
+    "delete" : "Delete",
+
     "projectNo": "PROJECT NO:",
     "projectName": "NAME:",
     "projectContract": "CONTRACT:",
