@@ -16,13 +16,18 @@ import IconButton from "@mui/material/IconButton";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import {useState} from "react";
+import { useSelector } from 'react-redux';
 
 
 const Projects = () => {
-
+    const user = useSelector(({persistedUser}) =>  persistedUser?.userDto);
+    const hasAccess = (roles) => user?.roles.some(r => roles.includes(r));
+    
     const navigate = useNavigate()
     const { isLoading, projects } = useProjects()
     const deleteProject = useDeleteProject();
+
+
 
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -102,13 +107,19 @@ const Projects = () => {
                             >
                                 Peržiūrėti projekta
                             </TableCell>
-                            <TableCell
-                                key={5}
-                                align="center"
-                                style={{flex: 0.5}}
-                            >
-                                Istrinti projekta
-                            </TableCell>
+
+                            { hasAccess(["ADMIN"]) &&
+                                    <TableCell
+                                        key={5}
+                                        align="center"
+                                        style={{ flex: 0.5 }}
+                                    >
+                                        Istrinti projekta
+                                    </TableCell>
+                            }
+                            
+
+
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -138,6 +149,8 @@ const Projects = () => {
                                                 <VisibilityOutlinedIcon/>
                                             </IconButton>
                                         </TableCell>
+                                        
+                                        { hasAccess(["ADMIN"]) &&
                                         <TableCell key={5} align="center" >
                                             <IconButton
                                                 sx={{
@@ -151,6 +164,7 @@ const Projects = () => {
                                                 <DeleteOutlineOutlinedIcon/>
                                             </IconButton>
                                         </TableCell>
+                                        }
                                     </TableRow>
                                 );
                             })}

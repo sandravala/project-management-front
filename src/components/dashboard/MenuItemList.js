@@ -14,7 +14,7 @@ export const MenuItemList = () => {
 
     return (
     <>
-        <MenuItem label={t('menuHome')} link="/" icon={<Home/>} />
+        <MenuItem label={t('menuHome')} link="/home" icon={<Home/>} />
         <MenuItem label={t('menuMyProjects')} link="/projects/my" icon={<StarRoundedIcon/>} />
         <MenuItem label={t('menuProjects')} link="/projects" icon={<CategoryIcon/>} />
         <MenuItem label={t('menuCreateProject')} link="/projects/save" icon={<AddBoxIcon/>} />

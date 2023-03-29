@@ -17,9 +17,13 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import {useState} from "react";
 import Typography from "@mui/material/Typography";
+import { useSelector } from 'react-redux';
 
 
-const MyProjects = ({userId}) => {
+const MyProjects = ({user}) => {
+
+    const userId = user ? user.id : 0;
+    const hasAccess = (roles) => user?.roles.some(r => roles.includes(r));
 
     const navigate = useNavigate()
     let [searchParams, setSearchParams] = useSearchParams({id: userId})
@@ -106,13 +110,17 @@ const MyProjects = ({userId}) => {
                             >
                                 Peržiūrėti projekta
                             </TableCell>
-                            <TableCell
-                                key={5}
-                                align="center"
-                                style={{flex: 0.5}}
-                            >
-                                Istrinti projekta
-                            </TableCell>
+                            
+                            { hasAccess(["ADMIN"]) &&
+                                    <TableCell
+                                        key={5}
+                                        align="center"
+                                        style={{ flex: 0.5 }}
+                                    >
+                                        Istrinti projekta
+                                    </TableCell>
+                            }
+
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -142,6 +150,8 @@ const MyProjects = ({userId}) => {
                                                 <VisibilityOutlinedIcon/>
                                             </IconButton>
                                         </TableCell>
+                                                                    
+                                        { hasAccess(["ADMIN"]) &&
                                         <TableCell key={5} align="center" >
                                             <IconButton
                                                 sx={{
@@ -155,6 +165,7 @@ const MyProjects = ({userId}) => {
                                                 <DeleteOutlineOutlinedIcon/>
                                             </IconButton>
                                         </TableCell>
+                                        }
                                     </TableRow>
                                 );
                             })}

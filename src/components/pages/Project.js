@@ -131,7 +131,7 @@ const Project = ({selectedTab}) => {
                                                     boxShadow: "rgb(126,134,157)",
                                                 }
                                             }}
-                                            onClick={() => navigate("/projects")}
+                                            onClick={() => navigate(-1)}
                                 >
                                     <KeyboardBackspaceSharpIcon />
                                 </IconButton>
@@ -173,7 +173,7 @@ const Project = ({selectedTab}) => {
                                 <GeneralProjectInfo Item={Item} Pr={pr}/>
                             </TabPanel>
                             <TabPanel value={tabValue} index={1}>
-                                <InvestmentList projectId={id}/>
+                                <InvestmentList coordinator={pr.coordinator}/>
                             </TabPanel>
                         </Box>
                     </Grid>

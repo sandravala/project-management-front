@@ -9,23 +9,33 @@ import MyProjects from "../pages/MyProjects";
 import {useSelector} from "react-redux";
 import Login from "../pages/Login";
 import UserRoleSettings from "../pages/UserRoleSettings";
-
+import ProtectedRoute from "./ProtectedRoute";
 
 
 const PagesRoutes = () => {
 
-const userId = useSelector(({persistedUser}) => persistedUser?.userDto);
+const user = useSelector(({persistedUser}) => persistedUser?.userDto);
 
 return (
     <Routes>
-        <Route path="/" element={<Home />}/>
+
+        <Route path="/home" element={<Home noAccess={false}/>}/>
+        <Route path="/" element={<Home noAccess={true}/>} />
         <Route path="/login" element={<Login />}/>
-        <Route path="/projects" element={<Projects />}/>
-        <Route path="/projects/my" element={<MyProjects userId={userId ? userId.id : 0}/>}/>
+        <Route path="/projects" element={
+            <ProtectedRoute roles={""}>
+                <Projects />
+            </ProtectedRoute>   
+        }/>
+        <Route path="/projects/my" element={<MyProjects user={user}/>}/>
         <Route path="/projects/:id" element={<Project selectedTab={0}/>}/>
         <Route path="/projects/:id/iList" element={<Project selectedTab={1} />}/>
         <Route path="/projects/save" element={<NewProject />}/>
-        <Route path="/users" element={<UserRoleSettings />}/>
+        <Route path="/users" element={
+        <ProtectedRoute roles={["ADMIN"]}>
+                        <UserRoleSettings/>
+        </ProtectedRoute>
+        }/>
 
     </Routes>
 )

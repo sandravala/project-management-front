@@ -68,7 +68,7 @@ const Header = ({drawerWidth, open, toggleDrawer}) => {
             <Button
                 variant="contained"
                 startIcon={<VpnKeyIcon/>}
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/home", {state: {greeting: false}})}
                 color="lighterPrimary"
                 sx={{
                     margin: 0,
@@ -80,7 +80,7 @@ const Header = ({drawerWidth, open, toggleDrawer}) => {
 
     const logout = () => {
         dispatch(userLoggedOut())
-        navigate("/")
+        navigate("/home", {state: {greeting: false}})
     }
 
     const logoutButton = user && (

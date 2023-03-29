@@ -28,15 +28,18 @@ import { useSelector} from "react-redux";
 import { IconButtonStyled } from "../../otherComponents/IconButtonStyled";
 import FieldSimple from "../../otherComponents/FieldSimple";
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import { LogLevel } from "react-virtuoso";
 
-const InvestmentList = () => {
+const InvestmentList = ({coordinator}) => {
 
-    const user = useSelector(({user}) => user?.userDto)
+    const user = useSelector(({persistedUser}) =>  persistedUser?.userDto);
+    const hasAccess = (roles) => user?.roles.some(r => roles.includes(r)) && user?.email === coordinator;
+
     const {id} = useParams()
     const { isLoading, data } = useInvestmentList(id)
     const saveInvestment = useSaveInvestment()
     const deleteInvestment = useDeleteInv()
-    
+
     const [rowIndex, setRowIndex] = useState(-1)
     const [openInvModal, setOpenInvModal] = useState(false)
     const [page, setPage] = useState(0)
@@ -136,7 +139,7 @@ const InvestmentList = () => {
         <Paper sx={{ width: '100%', height: '70%', overflow: 'hidden' }}>
             <NewInvestmentModal open={openInvModal} onClose={() => setOpenInvModal(false)} projectId={id} />
             <div style={{ marginTop: "10px", marginBottom: "10px", textAlign: "right" }}>
-                {user?.id && (
+                {hasAccess(["ADMIN", "PM"]) && (
                     <Button
                         variant="outlined"
                         color="secondary"
@@ -175,7 +178,7 @@ const InvestmentList = () => {
                                             {column.label}
                                         </TableCell>
                                     ))}
-                                    {/* { user?.id && ( */}
+                                    {hasAccess(["ADMIN", "PM"]) && (
                                     <TableCell
                                         key={7}
                                         align="center"
@@ -183,8 +186,8 @@ const InvestmentList = () => {
                                     >
                                         {t("invEdit")}
                                     </TableCell>
-                                    {/* )} */}
-                                    {/* { user?.id && ( */}
+                                    )}
+                                    {hasAccess(["ADMIN", "PM"]) && (
                                     <TableCell
                                         key={8}
                                         align="center"
@@ -192,7 +195,7 @@ const InvestmentList = () => {
                                     >
                                         {t("delete")}
                                     </TableCell>
-                                    {/* )} */}
+                                    )}
                                 </TableRow>
                             </TableHead>
 
@@ -216,7 +219,7 @@ const InvestmentList = () => {
                                                     );
                                                 })}
 
-                                                {/* { user?.id && ( */}
+                                                {hasAccess(["ADMIN", "PM"]) && (
                                                 <TableCell key={7} align="center" >
                                                     {
                                                         index !== rowIndex ?
@@ -225,12 +228,12 @@ const InvestmentList = () => {
                                                             <IconButtonStyled icon={<DoneOutlineSharpIcon />} OnClickFunction={() => handleSubmit(row.id)} />
                                                     }
                                                 </TableCell>
-                                                {/* )} */}
-                                                {/* { user?.id && ( */}
+                                                )}
+                                                {hasAccess(["ADMIN", "PM"]) && (
                                                 <TableCell key={8} align="center" >
                                                             <IconButtonStyled icon={<DeleteOutlineOutlinedIcon />} OnClickFunction={() => handleDelete(row.id)} />
                                                 </TableCell>
-                                                {/* )} */}
+                                                )}
                                             </TableRow>
                                         );
                                     })}

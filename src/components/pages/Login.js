@@ -54,7 +54,7 @@ const Login = () => {
 
                         setSubmitting(false)
 
-                        navigate("/")
+                        navigate("/home", {state: {greeting: true}})
                     }}
                     validationSchema={loginValidationSchema}>
                     {({errors, touched}) => (
