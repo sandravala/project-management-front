@@ -38,17 +38,17 @@ const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
 
 const loginValidationSchema = Yup.object().shape({
     name: Yup.string()
-        .required(),
+        .required(t("required")),
     surname: Yup.string()
-        .required(),
+        .required(t("required")),
     password: Yup.string()
-        .matches(PASSWORD_REGEX)
-        .required(),
+        .matches(PASSWORD_REGEX, t("yupPassword"))
+        .required(t("required")),
     organisation: Yup.string()
-        .required(),
+        .required(t("required")),
     email: Yup.string()
         .email()
-        .required(),
+        .required(t("required")),
 })
 
 

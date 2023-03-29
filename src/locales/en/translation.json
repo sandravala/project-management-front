@@ -51,10 +51,12 @@
     "yupAlias" : "Project alias should match this template: X.X. Project name (where X is any number)",
     "yupFundingRate" : "Required formatis:  0.<...> (number between 0 and 1)",
     "yupGrantAmount" : "Grant amount can't exceed eligible costs!",
+    "yupPassword" : "Password should contain at least 8 symbols and include at least 1 of each: number, special character and upper case character",
 
     "homeGreeting" : "WELL HELLO THERE, ",
     "login" : "LOGIN",
     "signup" : "SIGN UP",
+    "logout" : "LOG OUT",
 
     "userName" : "Name",
     "userSurname" : "Surname",

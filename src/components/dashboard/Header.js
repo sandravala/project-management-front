@@ -21,7 +21,7 @@ import Link from "@mui/material/Link";
 const Header = ({drawerWidth, open, toggleDrawer}) => {
 
     const navigate = useNavigate()
-    const user = useSelector(({user}) => user?.userDto);
+    const user = useSelector(({persistedUser}) => persistedUser?.userDto);
     const dispatch = useDispatch()
     const {t} = useTranslation();
 
@@ -60,7 +60,7 @@ const Header = ({drawerWidth, open, toggleDrawer}) => {
         <StyledTooltip
             title={
                 <React.Fragment>
-                    <Typography variant="normal">LOGIN</Typography>
+                    <Typography variant="normal">{t("login")}</Typography>
                 </React.Fragment>
             }
             placement="bottom-start"
@@ -68,7 +68,7 @@ const Header = ({drawerWidth, open, toggleDrawer}) => {
             <Button
                 variant="contained"
                 startIcon={<VpnKeyIcon/>}
-                onClick={() => navigate("/login")}
+                onClick={() => navigate("/")}
                 color="lighterPrimary"
                 sx={{
                     margin: 0,
@@ -99,7 +99,7 @@ const Header = ({drawerWidth, open, toggleDrawer}) => {
             <StyledTooltip
                 title={
                     <React.Fragment>
-                        <Typography variant="normal">LOGOUT</Typography>
+                        <Typography variant="normal">{t("logout")}</Typography>
                     </React.Fragment>
                 }
                 placement="bottom-start"

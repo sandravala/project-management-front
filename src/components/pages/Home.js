@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 
 const Home = () => {
     
-    const user = useSelector(({user}) => user?.userDto);
+    const user = useSelector(({persistedUser}) =>  persistedUser?.userDto);
     const {t} = useTranslation();
 
     const LogedinHome = user?.id && (

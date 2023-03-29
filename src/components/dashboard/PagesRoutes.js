@@ -14,7 +14,7 @@ import UserRoleSettings from "../pages/UserRoleSettings";
 
 const PagesRoutes = () => {
 
-const userId = useSelector(({user}) => user?.userDto);
+const userId = useSelector(({persistedUser}) => persistedUser?.userDto);
 
 return (
     <Routes>

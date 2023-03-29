@@ -16,6 +16,7 @@ import { use } from 'i18next';
 import { useEffect } from 'react';
 
 const UserRoleSettings = () => {
+
     const {data: userList, isSuccess} = UseGetAllUsers();
     const { t } = useTranslation();
     const [selectedUserId, setSelectedUserId] = useState();
@@ -46,8 +47,6 @@ const UserRoleSettings = () => {
         return setHasRoles({admin: isAdmin, pm: isPm, client: isClient });
         
     }
-
-
 
     const handleChangeValues = (e) => {
         setUserRoles(select[e.target.value].userRoles);

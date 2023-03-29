@@ -52,10 +52,12 @@
     "yupAlias" : "Projekto vidinis pavadinimas turi atitikti šabloną: X.X. Projektas (X yra bet koks skaičius)",
     "yupFundingRate" : "Nurodyti 0.<...> formatu (skaičius tarp 0 ir 1)",
     "yupGrantAmount" : "Finansavimo suma negali viršyti TFI!",
+    "yupPassword" : "Slaptažodį turi sudaryti mažiausiai 8 simboliai, įskaitant ir: mažiausiai 1 skaičius, 1 specialusis simbolis ir 1 didžioji raidė",
 
     "homeGreeting" : "LABA DIENA, GERB.  ",
     "login" : "PRISIJUNGTI",
     "signup" : "KURTI PASKYRĄ",
+    "logout" : "ATSIJUNGTI",
 
     "userName" : "Vardas",
     "userSurname" : "Pavardė",
