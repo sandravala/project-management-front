@@ -58,18 +58,18 @@ const validationSchema = yup.object({
 });
 
 const fieldNames = [
-    { label: t("projectNo"), name: "projectNo", type: "text", select: [] },
-    { label: t("projectName"), name: "name", type: "text", select: [] },
-    { label: t("client"), name: "client", type: "text", select: [] },
-    { label: t("coordinator"), name: "coordinator", type: "text", select: [] },
-    { label: t("projectAlias"), name: "projectAlias", type: "text", select: [] },
-    { label: t("startDate"), name: "startDate", type: "date", select: [] },
-    { label: t("endDate"), name: "endDate", type: "date", select: [] },
-    { label: t("contractSigningDate"), name: "contractSigningDate", type: "date", select: [] },
-    { label: t("invEligibleCosts"), name: "eligibleCosts", type: "text", select: [] },
+    { label: t("projectNo"), name: "projectNo", type: "text", select: []  },
+    { label: t("projectName"), name: "name", type: "text", select: []  },
+    { label: t("client"), name: "client", type: "text", select: []  },
+    { label: t("coordinator"), name: "coordinator", type: "text", select: []  },
+    { label: t("projectAlias"), name: "projectAlias", type: "text", select: []  },
+    { label: t("startDate"), name: "startDate", type: "date", select: []  },
+    { label: t("endDate"), name: "endDate", type: "date", select: []  },
+    { label: t("contractSigningDate"), name: "contractSigningDate", type: "date", select: []  },
+    { label: t("invEligibleCosts"), name: "eligibleCosts", type: "text", select: []  },
     { label: t("invRate"), name: "fundingRate", type: "text", select: [] },
-    { label: t("invFundingAmount"), name: "grantAmount", type: "text", select: [] },
-    { label: t("indirectCostRate"), name: "indirectCostRate", type: "text", select: [] },
+    { label: t("invFundingAmount"), name: "grantAmount", type: "text", select: []  },
+    { label: t("indirectCostRate"), name: "indirectCostRate", type: "text", select: []  },
 ];
 
     return (

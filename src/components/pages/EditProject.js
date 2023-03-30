@@ -9,6 +9,7 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import {useSaveProject} from "../../api/projectsApi";
+import { useSelector } from 'react-redux';
 import {useState} from "react";
 import { FieldFormik } from '../otherComponents/FieldFormik';
 import { useTranslation } from 'react-i18next';
@@ -63,17 +64,17 @@ const validationSchema = yup.object({
 
 const fieldNames = [
     { label: t("projectNo"), name: "projectNo", type: "text", select: [] },
-    { label: t("projectName"), name: "name", type: "text", select: [] },
-    { label: t("client"), name: "client", type: "text", select: [] },
-    { label: t("coordinator"), name: "coordinator", type: "text", select: [] },
-    { label: t("projectAlias"), name: "projectAlias", type: "text", select: [] },
-    { label: t("startDate"), name: "startDate", type: "date", select: [] },
-    { label: t("endDate"), name: "endDate", type: "date", select: [] },
-    { label: t("contractSigningDate"), name: "contractSigningDate", type: "date", select: [] },
-    { label: t("invEligibleCosts"), name: "eligibleCosts", type: "text", select: [] },
-    { label: t("invRate"), name: "fundingRate", type: "text", select: [] },
-    { label: t("invFundingAmount"), name: "grantAmount", type: "text", select: [] },
-    { label: t("indirectCostRate"), name: "indirectCostRate", type: "text", select: [] },
+    { label: t("projectName"), name: "name", type: "text", select: []  },
+    { label: t("client"), name: "client", type: "text", select: []  },
+    { label: t("coordinator"), name: "coordinator", type: "text", select: []  },
+    { label: t("projectAlias"), name: "projectAlias", type: "text", select: []  },
+    { label: t("startDate"), name: "startDate", type: "date", select: []  },
+    { label: t("endDate"), name: "endDate", type: "date", select: []  },
+    { label: t("contractSigningDate"), name: "contractSigningDate", type: "date", select: []  },
+    { label: t("invEligibleCosts"), name: "eligibleCosts", type: "text", select: []  },
+    { label: t("invRate"), name: "fundingRate", type: "text", select: []  },
+    { label: t("invFundingAmount"), name: "grantAmount", type: "text", select: []  },
+    { label: t("indirectCostRate"), name: "indirectCostRate", type: "text", select: []  },
 ];
 
     return (
@@ -131,15 +132,15 @@ const fieldNames = [
                         <DialogContent>
                         <Form id="projectForm">
                             {
-                                fieldNames.map((field) => {
-                                    return <FieldFormik 
-                                    key={field.name}
-                                    type={field.type} 
-                                    select={field.select} 
-                                    label={field.label} 
-                                    name={field.name}
-                                    propsF={props}/>
-                                })
+                                            fieldNames.map((field) => {
+                                                return <FieldFormik
+                                                    key={field.name}
+                                                    type={field.type}
+                                                    select={field.select}
+                                                    label={field.label}
+                                                    name={field.name}
+                                                    propsF={props} />
+                                            })
                             }                           
                             <Button color="primary" variant="contained" type="submit" form="projectForm">
                                 {t("save")}

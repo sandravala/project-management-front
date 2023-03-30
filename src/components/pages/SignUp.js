@@ -49,11 +49,11 @@ const loginValidationSchema = Yup.object().shape({
 
 
 const fieldNames = [
-    { label: t("userName"), name: "name", type: "text", select: [] },
-    { label: t("userSurname"), name: "surname", type: "text", select: [] },
-    { label: t("userPassword"), name: "password", type: "password", select: [] },
-    { label: t("userOrganisation"), name: "organisation", type: "text", select: [] },
-    { label: t("userEmail"), name: "email", type: "text", select: [] },
+    { label: t("userName"), name: "name", type: "text", select: []  },
+    { label: t("userSurname"), name: "surname", type: "text", select: []  },
+    { label: t("userPassword"), name: "password", type: "password", select: []  },
+    { label: t("userOrganisation"), name: "organisation", type: "text", select: []  },
+    { label: t("userEmail"), name: "email", type: "text", select: []  },
 ]
 
     return (
@@ -70,7 +70,6 @@ const fieldNames = [
                         email: ''
                     }}
                     onSubmit={async (values, { setSubmitting }) => {
-                        console.log("signup data", values)
 
                         const signUpResult = await signUp(values);
                         setAlertMessage(() => t(signUpResult))

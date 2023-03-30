@@ -32,7 +32,7 @@ export const FieldFormik = ({type, select, label, name, propsF}) => {
         );
         };
 
-    const selectField = type === "select" && (
+    const selectField = type === "select" &&  (
         <>
             <Field
             label={label}
@@ -74,20 +74,22 @@ export const FieldFormik = ({type, select, label, name, propsF}) => {
         </>
     )
 
-    const simpleTextField = type === "text" && (        
-        <>
-        <Field
-                label={label}
-                name={name}
-                variant="standard"
-                fullWidth
-                margin="normal"
-                error={!!propsF.errors[name] && propsF.touched[name]}
-                helperText={propsF.touched[name] && propsF.errors[name]}
-                as={TextField}
-        />
-        <Box pb={2.5} />
-        </>)
+
+
+const simpleTextField = type === "text" &&  (        
+    <>
+    <Field
+            label={label}
+            name={name}
+            variant="standard"
+            fullWidth
+            margin="normal"
+            error={!!propsF.errors[name] && propsF.touched[name]}
+            helperText={propsF.touched[name] && propsF.errors[name]}
+            as={TextField}
+    />
+    <Box pb={2.5} />
+    </>)
 
         const passwordField = type === "password" && (
             <>
@@ -140,7 +142,7 @@ export const FieldFormik = ({type, select, label, name, propsF}) => {
             </>
         )
 
-        const fieldToRender = simpleTextField || dateField || selectField || passwordField || checkBox;
+        const fieldToRender = simpleTextField ||  dateField || selectField || passwordField || checkBox;
 
     return fieldToRender;
 

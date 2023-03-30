@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useNavigate, useParams, useSearchParams} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import {
     CircularProgress,
     Table,
@@ -17,6 +17,8 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import {useState} from "react";
 import { t } from 'i18next';
+import EditProject from './EditProject';
+import EditSharpIcon from '@mui/icons-material/EditSharp';
 
 
 const MyProjects = ({user}) => {
@@ -27,6 +29,23 @@ const MyProjects = ({user}) => {
     const navigate = useNavigate()
     let [searchParams, setSearchParams] = useSearchParams({id: userId})
     const pmId = searchParams.get("id")
+    const [openEditProject, setOpenEditProject] = useState(false);
+    const [project, setProject] = useState({
+                                            id: null,
+                                            projectNo: "",
+                                            name: "",
+                                            client: "",
+                                            coordinator: "",
+                                            projectAlias: "",
+                                            startDate: "",
+                                            endDate: "",
+                                            contractSigningDate: "",
+                                            eligibleCosts: 0,
+                                            fundingRate: 0,
+                                            grantAmount: 0,
+                                            indirectCostRate: 0
+                                        });
+
 
     const { isLoading, projects } = useMyProjects(pmId)
     const deleteProject = useDeleteProject();
@@ -34,7 +53,7 @@ const MyProjects = ({user}) => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
-    const handleChangePage = (newPage) => {
+    const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
 
@@ -77,11 +96,10 @@ const MyProjects = ({user}) => {
         { id: 3, field: "coordinator", label: t("coordinator"), flex: 0.5, align: "left" },
     ];
 
-
-
     return (
         loadingElement ||
         <Paper sx={{ width: '100%', height: '70%', overflow: 'hidden' }}>
+            <EditProject projectToEdit={project} open={openEditProject} onClose={() => setOpenEditProject(false)} />
             <TableContainer sx={{ maxHeight: 440 }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
@@ -118,6 +136,15 @@ const MyProjects = ({user}) => {
                                     >
                                         {t("delete")}
                                     </TableCell>
+                            }
+                            { hasAccess(["ADMIN", "PM"]) &&
+                                    <TableCell
+                                    key={6}
+                                    align="center"
+                                    style={{ flex: 0.5 }}
+                                >
+                                    {t("invEdit")}
+                                </TableCell>
                             }
 
                         </TableRow>
@@ -165,6 +192,24 @@ const MyProjects = ({user}) => {
                                             </IconButton>
                                         </TableCell>
                                         }
+                                        { hasAccess(["ADMIN", "PM"]) &&
+                                        <TableCell key={6} align="center" >
+                                            <IconButton
+                                                sx={{
+                                                    color: "#0c2248",
+                                                    "& :hover": {
+                                                        color: "#fd2929",
+                                                        boxShadow: "rgb(126,134,157)",
+                                                    }
+                                                }}
+                                                onClick={() => {
+                                                    setOpenEditProject(true);
+                                                    setProject(row);
+                                                }}>
+                                                <EditSharpIcon />
+                                            </IconButton>
+                                        </TableCell>
+                            }
                                     </TableRow>
                                 );
                             })}
