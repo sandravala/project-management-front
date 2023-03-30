@@ -6,9 +6,7 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    DialogContentText,
     DialogTitle, Snackbar,
-    TextField,
 } from "@mui/material";
 import {Formik, Form} from "formik";
 import { FieldFormik } from "../../otherComponents/FieldFormik"
@@ -57,54 +55,14 @@ const productValidationSchema = yup.object().shape({
     ]
 
     const fieldNames = [
-        {
-            label: t("invPrType"),
-            name: "procurementType",
-            type: "select",
-            select: procurementTypes
-        },
-        {
-            label: t("invName"),
-            name: "name",
-            type: "text",
-            select: []
-        },
-        {
-            label: t("invEligibleCosts"),
-            name: "plannedCostAmount",
-            type: "text",
-            select: []
-        },
-        {
-            label: t("invActualCosts"),
-            name: "actualContractCosts",
-            type: "text",
-            select: []
-        },
-        {
-            label: t("invRate"),
-            name: "fundingRate",
-            type: "text",
-            select: []
-        },
-        {
-            label: t("invFundingAmount"),
-            name: "fundingAmount",
-            type: "text",
-            select: []
-        },
-        {
-            label: t("invDeadline"),
-            name: "procurementDeadline",
-            type: "date",
-            select: []
-        },
-        {
-            label: t("invState"),
-            name: "procurementState",
-            type: "select",
-            select: procurementStates
-        },
+        { label: t("invPrType"), name: "procurementType", type: "select", select: procurementTypes },
+        { label: t("invName"), name: "name", type: "text", select: [] },
+        { label: t("invEligibleCosts"), name: "plannedCostAmount", type: "text", select: [] },
+        { label: t("invActualCosts"), name: "actualContractCosts", type: "text", select: [] },
+        { label: t("invRate"), name: "fundingRate", type: "text", select: [] },
+        { label: t("invFundingAmount"), name: "fundingAmount", type: "text", select: [] },
+        { label: t("invDeadline"), name: "procurementDeadline", type: "date", select: [] },
+        { label: t("invState"), name: "procurementState", type: "select", select: procurementStates },
     ]
 
     return (
@@ -139,9 +97,6 @@ const productValidationSchema = yup.object().shape({
                                                     propsF={props} />
                                             })
                                         }
-                                        <Button color="primary" variant="contained" type="submit" form="projectForm">
-                                            Kurti
-                                        </Button>
                                     </Form>
 
                                     {props.isSubmitting && <CircularProgress color="inherit"/>}
@@ -161,7 +116,7 @@ const productValidationSchema = yup.object().shape({
                       autoHideDuration={6000}
                       onClose={() => setAlertOpen(false)}>
                 <Alert onClose={() => setAlertOpen(false)} severity="success" sx={{width: '100%'}}>
-                    Product created!!!
+                    {t("invCreatedAlert")}
                 </Alert>
             </Snackbar>
         </>

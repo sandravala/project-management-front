@@ -11,6 +11,7 @@ import Box from "@mui/material/Box";
 import {useState} from "react";
 import { useTranslation } from 'react-i18next';
 import { UseSetRoles, UseGetAllUsers } from '../../api/userApi';
+import Grid from '@mui/material/Grid';
 
 const UserRoleSettings = () => {
 
@@ -71,7 +72,8 @@ const UserRoleSettings = () => {
     return (
         <Box sx={{ display: 'flex', justifyContent: 'flex-start'}}>
         <Container sx={{ width: "500px", marginLeft: '0'}}>
-            
+        <Grid container spacing={2}>
+        <Grid item xs={5}>
             <TextField
             size="small"
             select
@@ -87,11 +89,12 @@ const UserRoleSettings = () => {
                 </MenuItem>
             ))}
             </TextField>
-
+            </Grid>
+            <Grid item xs={7}>
 
                 <Box sx={{ display: 'flex' }}>
                     <FormControl sx={{ m: 3 }} component="fieldset" variant="standard">
-                        <FormLabel component="legend">"pasirinkti reikiamas roles"</FormLabel>
+                        <FormLabel component="legend">{t("rolesChoose")}</FormLabel>
                         <FormGroup>
                             <FormControlLabel
                                 control={
@@ -112,18 +115,20 @@ const UserRoleSettings = () => {
                                 label="CLIENT"
                             />
                         </FormGroup>
-                        <FormHelperText>Visos pazymetos roles bus priskirtos atitinkamam vartotojuis</FormHelperText>
+                        <FormHelperText>{t("rolesHelperText")}</FormHelperText>
                     </FormControl>
 
                 </Box>
-                <Box sx={{ display: 'flex' }}><Button variant="contained" onClick={() => handleSubmit()}>submit change</Button></Box>
+                </Grid>
+                </Grid>
+                <Box sx={{ display: 'flex' }}><Button variant="contained" onClick={() => handleSubmit()}>{t("save")}</Button></Box>
         </Container>
             <Snackbar open={alertOpen}
                       anchorOrigin={{vertical: 'top', horizontal: 'center'}}
                       autoHideDuration={15000}
                       onClose={() => setAlertOpen(false)}>
                 <Alert onClose={() => setAlertOpen(false)} severity="success" sx={{width: '100%'}}>
-                    {"Vartotojo " + selectedUserName + " roles atnaujintos!"}
+                    {t("rolesAlert") + selectedUserName + t("roles") + dataFiltered}
                 </Alert>
             </Snackbar>
         </Box>

@@ -1,25 +1,18 @@
 import { Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import Login from "./Login"
 import Grid from '@mui/material/Grid';
-import { useState } from "react";
-import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import MyList from "../otherComponents/MyList";
 
 const Home = ({noAccess}) => {
     
     const { state } = useLocation();
-    // const { greeting } = state; 
     const user = useSelector(({persistedUser}) =>  persistedUser?.userDto);
     const {t} = useTranslation();
-    // const [isgreeting, setisGreeting] = useState(greeting);
 
-
-    // console.log("greeting: ");
-    // console.log(greeting);
-
-    const LogedinHomeGreeting = user?.id && !noAccess && state?.greeting && (
+    const LogedinHomeGreeting = user?.id && state?.greeting && !noAccess && (
 
                     <>
                         <div><Typography variant="upperCaseBold">{t("homeGreeting") + user.name}</Typography></div>
@@ -30,17 +23,28 @@ const Home = ({noAccess}) => {
 
     const NoAccess = user?.id && noAccess && (
 
-        <h1>no access</h1>
+        <h1>{t("noAccess")}</h1>
     )
 
     const LogedInHome = user?.id && !noAccess && (
-        
-        <h1>this is home page</h1>
+        <>
+        <MyList 
+        items={[
+            { primary: t("hItemOne"), secondary: "" },
+            { primary: t("hItemTwo"), secondary: t("rolesNeeded") + "ADMIN" },
+            { primary: t("hItemTree"), secondary: t("rolesNeeded") + "ADMIN" },
+            { primary: t("hItemFour"), secondary: t("rolesNeeded") + "ADMIN, PM, CLIENT" },
+            { primary: t("hItemFive"), secondary: t("rolesNeeded") + "ADMIN, PM" },
+            { primary: t("hItemSix"), secondary: t("rolesNeeded") + "ADMIN, PM, CLIENT" },
+            { primary: t("hItemSeven"), secondary: t("rolesNeeded") + "ADMIN" },
+            { primary: t("hItemEight"), secondary: t("rolesNeeded") + "ADMIN" },
+            { primary: t("hItemNine"), secondary: "" },
+        ]} 
+        header={t("homePage")}/>
+        </>
     )
-
+    
     const PublicHome = !user?.id && ( <Login/> )
-
-
 
     return (
 

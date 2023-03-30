@@ -7,7 +7,6 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         userLoggedIn(user, {payload: loggedInUser}) {
-            console.log(loggedInUser)
             return loggedInUser // cia pakeiciam state
         },
         userLoggedOut() {

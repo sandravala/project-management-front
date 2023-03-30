@@ -1,10 +1,24 @@
 {
     "language": "lt",
-    "siteTitle": "Projektų valdymo appsas",
+    "siteTitle": "Wannabe projektų valdymo appsas",
     "menuHome": "Pagrindinis",
     "menuMyProjects": "Mano projektai",
     "menuProjects": "Visi projektai",
     "menuCreateProject": "Kurti naują projektą",
+    "created" : "sukurtas",
+    "noAccess" : "Prieiga apribota. Susisiekite su administratoriumi",
+    "rolesNeeded" : "Reikalingos rolės: ",
+
+    "homePage" : "Pradinis puslapis",
+    "hItemOne" : "Priklausomai nuo turimų teisių, galite: ",
+    "hItemTwo" : "Kurti projektus",
+    "hItemTree" : "Trinti projektus",
+    "hItemFour" : "Peržiūrėti visus projektus",
+    "hItemFive" : "Peržiūrėti savo projektų sąrašą",
+    "hItemSix" : "Peržiūrėti kiekvieno projekto išlaidų sąrašą",
+    "hItemSeven" : "Pridėti naujas investicijas, redaguoti ir trinti jau įvestas investicijas",
+    "hItemEight" : "Priskirti roles appso vartotojams",
+    "hItemNine" : "Sėkmingo naudojimo! Prašau nieko nesulaužyti",
 
     "timerText": "IKI PABAIGOS LIKO:",
     "timerYear": "M",
@@ -12,6 +26,10 @@
     "timerDay": "D",
 
     "delete" : "Trinti",
+    "loading" : "Informacija kraunasi...",
+    "view" : "Peržiūrėti",
+    "error" : "Klaida! ",
+    "updated" : " atnaujintas!",
 
     "projectNo": "PROJEKTO NR:",
     "projectName": "PAVADINIMAS:",
@@ -39,6 +57,7 @@
     "addNewInv" : "Pridėti naują",
     "cancel" : "atšaukti",
     "save" : "saugoti",
+    "invCreatedAlert" : "Investicija išsaugota!",
 
     "client": "Klientas",
     "coordinator": "Koordinatorė",
@@ -47,6 +66,7 @@
     "endDate": "Projekto pabaiga",
     "contractSigningDate": "Sutarties pasirašymo data",
     "indirectCostRate": "Netiesioginių išlaidų proc.",
+    "project" : "Projektas ",
 
     "required" : "Privaloma nurodyti!",
     "yupAlias" : "Projekto vidinis pavadinimas turi atitikti šabloną: X.X. Projektas (X yra bet koks skaičius)",
@@ -65,6 +85,11 @@
     "userOrganisation" : "Įmonė",
     "userEmail" : "El. paštas",
     "userCreated" : "Paskyra sukurta. Prisijunkite",
-    "exists" : "Paskyra su tokiu el.pašto adresu jau egzistuoja! Prisijunkite arba sukurkite naują paskyrą"
+    "exists" : "Paskyra su tokiu el.pašto adresu jau egzistuoja! Prisijunkite arba sukurkite naują paskyrą",
+
+    "rolesChoose" : "Pasirinkite reikiamas roles",
+    "rolesHelperText" : "Dėmesio: vartotojui bus priskirtos tik pažymėtos rolės!",
+    "rolesAlert" : "Vartotojui: ",
+    "roles" : " nustatytos rolės: "
 }
 

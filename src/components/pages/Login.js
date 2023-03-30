@@ -46,14 +46,10 @@ const Login = () => {
                         password: ''
                     }}
                     onSubmit={async (values, { setSubmitting }) => {
-                        console.log("login data", values)
 
                         const user = await login(values)
-                        console.log("user", user)
                         dispatch(userLoggedIn(user))
-
                         setSubmitting(false)
-
                         navigate("/home", {state: {greeting: true}})
                     }}
                     validationSchema={loginValidationSchema}>

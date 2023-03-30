@@ -67,13 +67,17 @@ const useInvestmentList = (id) => {
 
 
 
-const useSaveProject = (config) => {
+const useSaveProject = () => {
 
     const saveProject = (project) => HTTP.post("/projects/save", project)
+    const queryClient = useQueryClient();
 
-    const mutation = useMutation(saveProject, config);
+    const mutation = useMutation(saveProject, {onSettled: () => {
+        void queryClient.invalidateQueries({ queryKey: ['getProjects'] })
+    }});
     return mutation.mutateAsync
 }
+
 
 
 

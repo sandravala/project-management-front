@@ -4,19 +4,15 @@ import {
     Snackbar,
     DialogContent
 } from "@mui/material";
-import Box from "@mui/material/Box";
-import {Field, Form, Formik} from "formik";
+import { Form, Formik} from "formik";
 import * as React from "react";
 import * as Yup from 'yup'
-import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {signUp} from "../../api/userApi";
-import {userLoggedIn} from "../../store/slices/UserSlice";
 import { FieldFormik } from '../otherComponents/FieldFormik';
 import { useTranslation } from "react-i18next";
 import MyAlert from "../otherComponents/MyAlert";
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+
 
 
 const SignUp = ({ open, onClose }) => {
@@ -31,7 +27,7 @@ const [alertMessage, setAlertMessage] = React.useState("");
 const onAlertClick = () => {
     onClose();
     setAlertOpen(false);
-    setTimeout(() => setFormOpen(true), 3000);
+    setTimeout(() => setFormOpen(true), 2000);
 }
 
 const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;

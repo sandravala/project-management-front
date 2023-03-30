@@ -13,20 +13,39 @@ import {
 import {useDeleteProject, useProjects} from "../../api/projectsApi";
 import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
+import EditSharpIcon from '@mui/icons-material/EditSharp';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import {useState} from "react";
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import EditProject from './EditProject';
 
 
 const Projects = () => {
+
+    const {t} = useTranslation();
     const user = useSelector(({persistedUser}) =>  persistedUser?.userDto);
     const hasAccess = (roles) => user?.roles.some(r => roles.includes(r));
-
     const navigate = useNavigate()
     const { isLoading, projects } = useProjects()
     const deleteProject = useDeleteProject();
-
+    const [openEditProject, setOpenEditProject] = useState(false);
+    const [project, setProject] = useState({
+                                            id: null,
+                                            projectNo: "",
+                                            name: "",
+                                            client: "",
+                                            coordinator: "",
+                                            projectAlias: "",
+                                            startDate: "",
+                                            endDate: "",
+                                            contractSigningDate: "",
+                                            eligibleCosts: 0,
+                                            fundingRate: 0,
+                                            grantAmount: 0,
+                                            indirectCostRate: 0
+                                        });
 
 
     const [page, setPage] = useState(0);
@@ -43,7 +62,7 @@ const Projects = () => {
 
     const loadingElement = isLoading && (
         <div style={{display: "flex", height: "80vh", width: "100%", alignItems: "center", justifyContent: "center"}}>
-            <CircularProgress /><span>Projects loading...</span>
+            <CircularProgress /><span>{t("loading")}</span>
         </div>
     )
 
@@ -74,17 +93,16 @@ const Projects = () => {
     const rows = hasAccess(["CLIENT"]) ? filteredRows : allRows;
 
     const columns = [
-        { id: 0, field: "projectAlias", label: "Projektas", flex: 0.5, align: "left" },
-        { id: 1, field: "name", label: "Projekto pavadinimas", flex: 1, align: "left" },
-        { id: 2, field: "client", label: "Klientas", flex: 0.4, align: "left" },
-        { id: 3, field: "coordinator", label: "Koordinuoja", flex: 0.5, align: "left" },
+        { id: 0, field: "projectAlias", label: t("projectAlias"), flex: 0.5, align: "left" },
+        { id: 1, field: "name", label: t("projectName"), flex: 1, align: "left" },
+        { id: 2, field: "client", label: t("client"), flex: 0.4, align: "left" },
+        { id: 3, field: "coordinator", label: t("coordinator"), flex: 0.5, align: "left" },
     ];
-
-
 
     return (
         loadingElement ||
         <Paper sx={{ width: '100%', height: '70%', overflow: 'hidden' }}>
+            <EditProject projectToEdit={project} open={openEditProject} onClose={() => setOpenEditProject(false)} />
             <TableContainer sx={{ maxHeight: 440 }}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
@@ -110,17 +128,26 @@ const Projects = () => {
                                 align="center"
                                 style={{flex: 0.5}}
                             >
-                                Peržiūrėti projekta
+                                {t("view")}
                             </TableCell>
 
                             { hasAccess(["ADMIN"]) &&
+                            <>
                                     <TableCell
                                         key={5}
                                         align="center"
                                         style={{ flex: 0.5 }}
                                     >
-                                        Istrinti projekta
+                                        {t("delete")}
                                     </TableCell>
+                                    <TableCell
+                                    key={6}
+                                    align="center"
+                                    style={{ flex: 0.5 }}
+                                >
+                                    {t("invEdit")}
+                                </TableCell>
+                                </>
                             }
                             
 
@@ -156,6 +183,7 @@ const Projects = () => {
                                         </TableCell>
                                         
                                         { hasAccess(["ADMIN"]) &&
+                                        <>
                                         <TableCell key={5} align="center" >
                                             <IconButton
                                                 sx={{
@@ -169,6 +197,24 @@ const Projects = () => {
                                                 <DeleteOutlineOutlinedIcon/>
                                             </IconButton>
                                         </TableCell>
+
+                                        <TableCell key={6} align="center" >
+                                        <IconButton
+                                            sx={{
+                                                color: "#0c2248",
+                                                "& :hover": {
+                                                    color: "#fd2929",
+                                                    boxShadow: "rgb(126,134,157)",
+                                                }
+                                            }}
+                                            onClick={() => {
+                                                setOpenEditProject(true); 
+                                                setProject(row);
+                                                }}>
+                                            <EditSharpIcon />
+                                        </IconButton>
+                                        </TableCell>
+                                        </>
                                         }
                                     </TableRow>
                                 );

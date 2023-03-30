@@ -1,10 +1,8 @@
-import {Route, Routes, useNavigate, useParams} from "react-router-dom";
-import {
-    useInvestmentList, useSaveProject,
+import { useNavigate, useParams} from "react-router-dom";
+import { useSaveProject,
     useViewProject,
 } from "../../api/projectsApi";
 import {Countdown} from "./ProjectDashboard/CountDownTimer";
-import {DoughnutChart} from "./ProjectDashboard/DoghnutChart";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -12,9 +10,8 @@ import * as PropTypes from "prop-types";
 import {styled} from "@mui/material/styles";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import {useEffect, useState} from "react";
+import { useState} from "react";
 import Typography from "@mui/material/Typography";
-import { Link } from 'react-router-dom';
 import InvestmentList from "./ProjectDashboard/InvestmentList";
 import {GeneralProjectInfo} from "./ProjectDashboard/GeneralProjectInfo";
 import KeyboardBackspaceSharpIcon from '@mui/icons-material/KeyboardBackspaceSharp';
@@ -32,11 +29,6 @@ const Project = ({selectedTab}) => {
     const [tabValue, setTabValue] = useState(selectedTab);
     const {t} = useTranslation();
 
-
-    // useEffect(() => {
-    //     setTabValue(+tabPath[window.location.pathname.substring(1)] || 0);
-    // }, []);
-
     const tabPath = ['', 'iList'];
 
     const handleChange = (event, newValue) => {
@@ -49,7 +41,7 @@ const Project = ({selectedTab}) => {
     }
 
     if(isError) {
-        return <span>Error: {error.message }</span>
+        return <span>{t("error")} {error.message }</span>
     }
 
     if(isSuccess) {

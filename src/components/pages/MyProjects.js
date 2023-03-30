@@ -16,8 +16,7 @@ import IconButton from "@mui/material/IconButton";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import {useState} from "react";
-import Typography from "@mui/material/Typography";
-import { useSelector } from 'react-redux';
+import { t } from 'i18next';
 
 
 const MyProjects = ({user}) => {
@@ -35,7 +34,7 @@ const MyProjects = ({user}) => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
-    const handleChangePage = (event, newPage) => {
+    const handleChangePage = (newPage) => {
         setPage(newPage);
     };
 
@@ -46,7 +45,7 @@ const MyProjects = ({user}) => {
 
     const loadingElement = isLoading && (
         <div style={{display: "flex", height: "80vh", width: "100%", alignItems: "center", justifyContent: "center"}}>
-            <CircularProgress /><span>Projects loading...</span>
+            <CircularProgress /><span>{t("loading")}</span>
         </div>
     )
 
@@ -71,13 +70,11 @@ const MyProjects = ({user}) => {
     })
 
 
-
-
     const columns = [
-        { id: 0, field: "projectAlias", label: "Projektas", flex: 0.5, align: "left" },
-        { id: 1, field: "name", label: "Projekto pavadinimas", flex: 1, align: "left" },
-        { id: 2, field: "client", label: "Klientas", flex: 0.4, align: "left" },
-        { id: 3, field: "coordinator", label: "Koordinuoja", flex: 0.5, align: "left" },
+        { id: 0, field: "projectAlias", label: t("projectAlias"), flex: 0.5, align: "left" },
+        { id: 1, field: "name", label: t("projectName"), flex: 1, align: "left" },
+        { id: 2, field: "client", label: t("client"), flex: 0.4, align: "left" },
+        { id: 3, field: "coordinator", label: t("coordinator"), flex: 0.5, align: "left" },
     ];
 
 
@@ -110,7 +107,7 @@ const MyProjects = ({user}) => {
                                 align="center"
                                 style={{flex: 0.5}}
                             >
-                                Peržiūrėti projekta
+                                {t("view")}
                             </TableCell>
                             
                             { hasAccess(["ADMIN"]) &&
@@ -119,7 +116,7 @@ const MyProjects = ({user}) => {
                                         align="center"
                                         style={{ flex: 0.5 }}
                                     >
-                                        Istrinti projekta
+                                        {t("delete")}
                                     </TableCell>
                             }
 

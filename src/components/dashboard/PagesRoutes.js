@@ -1,9 +1,7 @@
 import {Route, Routes} from "react-router-dom";
 import Home from "../pages/Home";
-import About from "../pages/About";
 import Projects from "../pages/Projects";
 import Project from "../pages/Project";
-import InvestmentList from "../pages/ProjectDashboard/InvestmentList";
 import NewProject from "../pages/NewProject";
 import MyProjects from "../pages/MyProjects";
 import {useSelector} from "react-redux";

@@ -1,7 +1,10 @@
 import  * as React from 'react';
 import { Form, Formik, Field} from 'formik';
 import * as yup from 'yup';
-import {Alert, Snackbar, TextField, MenuItem} from "@mui/material";
+import {Alert, Snackbar, TextField, MenuItem, Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,} from "@mui/material";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
@@ -9,8 +12,9 @@ import {useSaveProject} from "../../api/projectsApi";
 import {useState} from "react";
 import { FieldFormik } from '../otherComponents/FieldFormik';
 import { useTranslation } from 'react-i18next';
+import MyAlert from '../otherComponents/MyAlert';
 
-const NewProject = () => {
+const EditProject = ({projectToEdit, open, onClose}) => {
 
     const saveProject = useSaveProject();
     const [alertOpen, setAlertOpen] = useState(false);
@@ -73,26 +77,32 @@ const fieldNames = [
 ];
 
     return (
+        <>
+        <Dialog fullWidth={true} open={open} onClose={onClose}>
+            <DialogTitle></DialogTitle>
+
         <Box sx={{ display: 'flex', justifyContent: 'flex-start'}}>
         <Container sx={{ width: "500px", marginLeft: '0'}}>
             <Formik
                 initialValues={{
-                    projectNo: "",
-                    name: "",
-                    client: "",
-                    coordinator: "",
-                    projectAlias: "",
-                    startDate: "",
-                    endDate: "",
-                    contractSigningDate: "",
-                    eligibleCosts: 0,
-                    fundingRate: 0,
-                    grantAmount: 0,
-                    indirectCostRate: 0
+                    id: projectToEdit.id,
+                    projectNo: projectToEdit.projectNo,
+                    name: projectToEdit.name,
+                    client: projectToEdit.client,
+                    coordinator: projectToEdit.coordinator,
+                    projectAlias: projectToEdit.projectAlias,
+                    startDate: projectToEdit.startDate,
+                    endDate: projectToEdit.endDate,
+                    contractSigningDate: projectToEdit.contractSigningDate,
+                    eligibleCosts: projectToEdit.eligibleCosts,
+                    fundingRate: projectToEdit.fundingRate,
+                    grantAmount: projectToEdit.grantAmount,
+                    indirectCostRate: projectToEdit.indirectCostRate
                 }}
 
                 onSubmit={async (values, { setSubmitting }) => {
                     const projectToSave = {
+                        id: projectToEdit.id,
                         projectNo: values.projectNo,
                         name: values.name,
                         client: values.client,
@@ -116,6 +126,9 @@ const fieldNames = [
             >
                 {(props) => {
                     return (
+                        <>
+                        <MyAlert message="" handleClose={onClose} />
+                        <DialogContent>
                         <Form id="projectForm">
                             {
                                 fieldNames.map((field) => {
@@ -131,21 +144,29 @@ const fieldNames = [
                             <Button color="primary" variant="contained" type="submit" form="projectForm">
                                 {t("save")}
                             </Button>
+                            <Button onClick={onClose}>{t("cancel")}</Button>
                         </Form>
+                        </DialogContent>
+                        </>
                     )
                 }}
             </Formik>
+            
         </Container>
             <Snackbar open={alertOpen}
                       anchorOrigin={{vertical: 'top', horizontal: 'center'}}
                       autoHideDuration={15000}
                       onClose={() => setAlertOpen(false)}>
                 <Alert onClose={() => setAlertOpen(false)} severity="success" sx={{width: '100%'}}>
-                    {t("project") + savedProjectAlias + t("created")}
+                    {t("project") + savedProjectAlias + t("updated")}
                 </Alert>
             </Snackbar>
         </Box>
+
+        </Dialog>
+
+        </>
             );
 };
 
-export default NewProject
+export default EditProject

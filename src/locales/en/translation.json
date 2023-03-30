@@ -1,16 +1,36 @@
 {
     "language": "en",
-    "siteTitle": "Project management app",
+    "siteTitle": "Wannabe project management app",
     "menuHome": "Home",
     "menuMyProjects": "My projects",
     "menuProjects": "All projects",
     "menuCreateProject": "New project",
+    "created" : "created",
+    "noAccess" : "Restricted access. Contact admin",
+    "rolesNeeded" : "Roles needed: ",
+
+
+    "homePage" : "Home page",
+    "hItemOne" : "In this app, you can (depending on the role you have): ",
+    "hItemTwo" : "Create projects",
+    "hItemTree" : "Delete projects",
+    "hItemFour" : "View all projects",
+    "hItemFive" : "View your project list",
+    "hItemSix" : "View investment list of particular project",
+    "hItemSeven" : "Add new investments, edit and delete current investment list",
+    "hItemEight" : "Set roles for app users",
+    "hItemNine" : "Have fun! Please don't break anything",
+
     "timerText": "TIME LEFT:",
     "timerYear": "Y",
     "timerMonth": "M",
     "timerDay": "D",
 
     "delete" : "Delete",
+    "loading" : "Information is loading...",
+    "view" : "View",
+    "error" : "Error! ",
+    "updated" : " updated!",
 
     "projectNo": "PROJECT NO:",
     "projectName": "NAME:",
@@ -33,11 +53,13 @@
     "invState": "State",
     "invEdit": "Edit",
     "invRate" : "Financing rate",
+    "project" : "Project ",
 
     "newInvModalTitle": "Add new investment",
     "addNewInv" : "Add new",
     "cancel" : "cancel",
     "save" : "save",
+    "invCreatedAlert" : "Investment saved!",
 
     "client": "Client",
     "coordinator": "Coordinator",
@@ -63,6 +85,11 @@
     "userPassword" : "Password",
     "userOrganisation" : "Organisation",
     "userEmail" : "Email",
-    "created" : "User created. Please login",
-    "exists" : "User already exists! Please login or create new account"
+    "userCreated" : "User created. Please login",
+    "exists" : "User already exists! Please login or create new account",
+
+    "rolesChoose" : "Choose neccessary roles",
+    "rolesHelperText" : "Be carefull: only checked roles will be set for this user!",
+    "rolesAlert" : "Roles updated for user: ",
+    "roles" : ", current roles: "
 }
