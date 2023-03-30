@@ -9,6 +9,16 @@ const signUp = (signupData) => HTTP.post("/user", signupData)
 
 const setRoles = (id, listOfRoles) => HTTP.put(`/roles/${id}`, listOfRoles)
     .then(({data}) => data)
+    .catch((error) => console.log(error.message))
+
+const UseSetRoles = () => {
+
+    const setRoles = (id, listOfRoles) => HTTP.put(`/roles/${id}`, listOfRoles)
+    .then(({data}) => data)
+    .catch((error) => console.log(error.message))
+    UseGetAllUsers();
+    return setRoles;
+}
 
 const UseGetAllUsers = () => {
     const getUsers = () =>
@@ -16,9 +26,9 @@ const UseGetAllUsers = () => {
         .then(response => response.data)
         .catch((error) => console.log(error.message));
 
-    const context = useQuery('getUsers', getUsers, { refetchOnWindowFocus: false})
+    const context = useQuery('getUsers', getUsers, { refetchOnWindowFocus: true })
     return {...context, users: context.data}
 }
 
 
-export { login, signUp, setRoles, UseGetAllUsers }
+export { login, signUp, setRoles, UseGetAllUsers, UseSetRoles }

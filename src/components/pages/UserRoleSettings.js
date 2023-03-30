@@ -1,30 +1,29 @@
 import  * as React from 'react';
-import { Form, Formik, Field} from 'formik';
-import * as yup from 'yup';
-import {Alert, Snackbar, TextField, MenuItem} from "@mui/material";
-
+import {Alert, Snackbar, TextField, MenuItem, Button} from "@mui/material";
+import FormLabel from '@mui/material/FormLabel';
+import FormControl from '@mui/material/FormControl';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormHelperText from '@mui/material/FormHelperText';
+import Checkbox from '@mui/material/Checkbox';
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import {useSaveProject} from "../../api/projectsApi";
 import {useState} from "react";
-import { FieldFormik } from '../otherComponents/FieldFormik';
 import { useTranslation } from 'react-i18next';
-import { getAllUsers, UseGetAllUsers } from '../../api/userApi';
-import { IconButtonStyled } from '../otherComponents/IconButtonStyled';
-import CheckBoxGroup from '../otherComponents/CheckBoxGroup';
-import { use } from 'i18next';
-import { useEffect } from 'react';
+import { UseSetRoles, UseGetAllUsers } from '../../api/userApi';
 
 const UserRoleSettings = () => {
 
-    const {data: userList, isSuccess} = UseGetAllUsers();
+    const {data: userList} = UseGetAllUsers();
+    const setNewRolesRefetch = UseSetRoles();
     const { t } = useTranslation();
-    const [selectedUserId, setSelectedUserId] = useState();
-    const [values, setValues] = useState({});
-    const [ userRoles, setUserRoles ] = useState(["ADMIN", "PM", "CLIENT"]);
+    const [selectedUserId, setSelectedUserId] = useState(0);
+    const [selectedUserName, setSelectedUserName] = useState();
     const [ hasRoles, setHasRoles ] = useState({admin: false, pm: false, client: false});
-
+    const [ alertOpen, setAlertOpen ] = useState(false);
     const select = [{userId: 0, userName: "Pasirinkite vartotoją", userRoles: []}];
+    
+   
     const usersToSelect = () => {
                 
         userList && userList.map(user => {
@@ -38,6 +37,7 @@ const UserRoleSettings = () => {
         return select;
     }
 
+
     const userHasRoles = (userRoles) => {
 
         const isAdmin = userRoles.indexOf("ADMIN") >= 0;
@@ -49,13 +49,24 @@ const UserRoleSettings = () => {
     }
 
     const handleChangeValues = (e) => {
-        setUserRoles(select[e.target.value].userRoles);
         userHasRoles(select[e.target.value].userRoles);
-        setValues({ ...values, [e.target.name]: e.target.value });
-        console.log("handle change values");
-        console.log({ ...values, [e.target.name]: e.target.value });
-
+        setSelectedUserId(select[e.target.value].userId);
+        setSelectedUserName(select[e.target.value].userName)
     }
+
+    const handleChangeChecbox = (event) => {
+        setHasRoles({
+          ...hasRoles,
+          [event.target.name]: event.target.checked,
+        });
+      };
+
+    const handleSubmit = () => {
+        setNewRolesRefetch(selectedUserId,dataFiltered);
+        setAlertOpen(!alertOpen);
+    }
+
+    const dataFiltered = Object.keys(hasRoles).filter(key => hasRoles[key]).map(key => key.toUpperCase());
 
     return (
         <Box sx={{ display: 'flex', justifyContent: 'flex-start'}}>
@@ -78,24 +89,43 @@ const UserRoleSettings = () => {
             </TextField>
 
 
-            <CheckBoxGroup rolesActive={hasRoles} formLabel={"pasirinkti reikiamas roles"} helperText={"helper text"} userId={values.user}/>
+                <Box sx={{ display: 'flex' }}>
+                    <FormControl sx={{ m: 3 }} component="fieldset" variant="standard">
+                        <FormLabel component="legend">"pasirinkti reikiamas roles"</FormLabel>
+                        <FormGroup>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox checked={hasRoles.admin} onChange={handleChangeChecbox} name="admin" />
+                                }
+                                label="ADMIN"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox checked={hasRoles.pm} onChange={handleChangeChecbox} name="pm" />
+                                }
+                                label="PM"
+                            />
+                            <FormControlLabel
+                                control={
+                                    <Checkbox checked={hasRoles.client} onChange={handleChangeChecbox} name="client" />
+                                }
+                                label="CLIENT"
+                            />
+                        </FormGroup>
+                        <FormHelperText>Visos pazymetos roles bus priskirtos atitinkamam vartotojuis</FormHelperText>
+                    </FormControl>
 
-
-
-
-
-
-
-
+                </Box>
+                <Box sx={{ display: 'flex' }}><Button variant="contained" onClick={() => handleSubmit()}>submit change</Button></Box>
         </Container>
-            {/* <Snackbar open={alertOpen}
+            <Snackbar open={alertOpen}
                       anchorOrigin={{vertical: 'top', horizontal: 'center'}}
                       autoHideDuration={15000}
                       onClose={() => setAlertOpen(false)}>
                 <Alert onClose={() => setAlertOpen(false)} severity="success" sx={{width: '100%'}}>
-                    {"Projektas " + savedProjectAlias + " sukurtas!"}
+                    {"Vartotojo " + selectedUserName + " roles atnaujintos!"}
                 </Alert>
-            </Snackbar> */}
+            </Snackbar>
         </Box>
             );
 

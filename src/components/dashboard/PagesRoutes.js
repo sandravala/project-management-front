@@ -23,7 +23,7 @@ return (
         <Route path="/" element={<Home noAccess={true}/>} />
         <Route path="/login" element={<Login />}/>
         <Route path="/projects" element={
-            <ProtectedRoute roles={""}>
+            <ProtectedRoute roles={["ADMIN", "PM", "CLIENT"]}>
                 <Projects />
             </ProtectedRoute>   
         }/>

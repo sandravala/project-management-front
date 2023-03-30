@@ -7,7 +7,7 @@ const HTTP = axios.create({
 const initBackendApiClient = (store) => {
     HTTP.interceptors.request.use(config => {
 
-        const jwt = store.getState().user?.jwt
+        const jwt = store.getState().persistedUser?.jwt
 
         if (jwt) {
             config.headers.Authorization = "Bearer " + jwt
